@@ -1,0 +1,25 @@
+.the-navbar {
+  position: fixed;
+  top: 0;
+
+  @extend .full-width;
+  &__menu {
+    @extend .px-5;
+    border-bottom: inherit;
+  }
+  &__menu-items {
+    display: flex; 
+    justify-content: space-between;
+
+    &--text {
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+  }
+}
+
+// color icons on navbar
+.el-menu-item > .text-light,
+.el-submenu__title > i {
+  color: #ffffff !important;
+}
