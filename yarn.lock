@@ -971,16 +971,16 @@
     lodash "^4.17.15"
     nanoid "^2.1.8"
 
-"@nuxtjs/axios@^5.9.0":
-  version "5.9.0"
-  resolved "https://registry.yarnpkg.com/@nuxtjs/axios/-/axios-5.9.0.tgz#08c20fa4c9936bf0015733e1598860032a1a237a"
-  integrity sha512-jc3KOHlFA5zdijiuYSRk0nzmqGSoP30LasD5J5XxUDpc/YlzwAL+Z0+kLcU5IwlrEDkg4VwkhZd/9OG6RkA2CQ==
+"@nuxtjs/axios@^5.9.0", "@nuxtjs/axios@^5.9.2":
+  version "5.9.2"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/axios/-/axios-5.9.2.tgz#fe452f85ef7c22c5d50f5f961db1c4b50b080233"
+  integrity sha512-OwRy40N7Q0V0i5A8ojUy9TlvvaYDPlDmUDKPMVxkcFf+wnmgtJbLJGgHrPWof9Y0jb9EXLgxbRmk0LgrNk7QCw==
   dependencies:
     "@nuxtjs/proxy" "^1.3.3"
     axios "^0.19.0"
     axios-retry "^3.1.2"
-    consola "^2.11.1"
-    defu "^0.0.3"
+    consola "^2.11.3"
+    defu "^0.0.4"
 
 "@nuxtjs/dotenv@^1.4.1":
   version "1.4.1"
@@ -1417,9 +1417,9 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
     color-convert "^1.9.0"
 
 ansi-styles@^4.0.0, ansi-styles@^4.1.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-4.2.0.tgz#5681f0dcf7ae5880a7841d8831c4724ed9cc0172"
-  integrity sha512-7kFQgnEaMdRtwf6uSfUnVr9gSGC7faurn+J/Mv90/W+iTtN0405/nLdopfMWwchyxhbGYl6TC4Sccn9TUkGAgg==
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-4.2.1.tgz#90ae75c424d008d2624c5bf29ead3177ebfcf359"
+  integrity sha512-9VGjrMsG1vePxcSweQsN20KY/c4zN0h9fLjqAbwbPfahM3t+NL+M9HC8xeXG2I8pX5NoamTGNuomEUFI7fcUjA==
   dependencies:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
@@ -2296,7 +2296,7 @@ connect@^3.7.0:
     parseurl "~1.3.3"
     utils-merge "1.0.1"
 
-consola@^2.10.0, consola@^2.10.1, consola@^2.11.1, consola@^2.11.2, consola@^2.4.0, consola@^2.5.6, consola@^2.6.0, consola@^2.9.0:
+consola@^2.10.0, consola@^2.10.1, consola@^2.11.1, consola@^2.11.2, consola@^2.11.3, consola@^2.4.0, consola@^2.5.6, consola@^2.6.0, consola@^2.9.0:
   version "2.11.3"
   resolved "https://registry.yarnpkg.com/consola/-/consola-2.11.3.tgz#f7315836224c143ac5094b47fd4c816c2cd1560e"
   integrity sha512-aoW0YIIAmeftGR8GSpw6CGQluNdkWMWh3yEFjH/hmynTYnMtibXszii3lxCXmk8YxJtI3FAK5aTiquA5VH68Gw==
@@ -2768,10 +2768,10 @@ defu@^0.0.1:
   resolved "https://registry.yarnpkg.com/defu/-/defu-0.0.1.tgz#74dc4d64e401d7f95c6755fe98bc5cd688833a8f"
   integrity sha512-Pz9yznbSzVTNA67lcfqVnktROx2BrrBBcmQqGrfe0zdiN5pl5GQogLA4uaP3U1pR1LHIZpEYTAh2sn+v4rH1dA==
 
-defu@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/defu/-/defu-0.0.3.tgz#bdc3ea1e1ab2120d4d4a129147f3ba9b7f9fe103"
-  integrity sha512-u/fe4fBwrD0KACvI0sYWTWFzooqONZq8ywPnK0ZkAgLNwaDTKpSWvMiiU4QmzhrQCXu8Y0+HIWP8amE18lsL4A==
+defu@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/defu/-/defu-0.0.4.tgz#9294753fff9a88217635ed387e4a451f1738e6ff"
+  integrity sha512-rgzSYjB7bq5P6uPTPOlFYy/hw4SR/Ml+SM/ZlRx1BEcgUmcTA8yqnzByRiA4npIuJPb1uRJo6ROx++Xs5QooqQ==
 
 depd@~1.1.2:
   version "1.1.2"
@@ -4475,6 +4475,11 @@ lazy-cache@^1.0.3:
   resolved "https://registry.yarnpkg.com/lazy-cache/-/lazy-cache-1.0.4.tgz#a1d78fc3a50474cb80845d3b3b6e1da49a446e8e"
   integrity sha1-odePw6UEdMuAhF07O24dpJpEbo4=
 
+leaflet@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.6.0.tgz#aecbb044b949ec29469eeb31c77a88e2f448f308"
+  integrity sha512-CPkhyqWUKZKFJ6K8umN5/D2wrJ2+/8UIpXppY7QDnUZW5bZL5+SEI2J7GBpwh4LIupOKqbNSQXgqmrEJopHVNQ==
+
 levn@^0.3.0, levn@~0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/levn/-/levn-0.3.0.tgz#3b09924edf9f083c0490fdd4c0bc4421e04764ee"
@@ -5203,9 +5208,9 @@ p-finally@^2.0.0:
   integrity sha512-vpm09aKwq6H9phqRQzecoDpD8TmVyGw70qmWlyq5onxY7tqyTTFVvxMykxQSQKILBSFlbXpypIw2T1Ml7+DDtw==
 
 p-limit@^2.0.0, p-limit@^2.2.0:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-2.2.1.tgz#aa07a788cc3151c939b5131f63570f0dd2009537"
-  integrity sha512-85Tk+90UCVWvbDavCLKPOLC9vvY8OwEX/RtKF+/1OADJMVlFfEHOiMTPVyxg7mk/dKa+ipdHm0OUkTvCpMTuwg==
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-2.2.2.tgz#61279b67721f5287aa1c13a9a7fbbc48c9291b1e"
+  integrity sha512-WGR+xHecKTr7EbUEhyLSh5Dube9JtdiG78ufaeLxTgpudf/20KqyMioIUZJAezlTIi6evxuoUs9YXc11cU+yzQ==
   dependencies:
     p-try "^2.0.0"
 
@@ -6677,10 +6682,10 @@ sass-resources-loader@^2.0.0:
     glob "^7.1.1"
     loader-utils "^1.0.4"
 
-sass@^1.24.0:
-  version "1.24.0"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.24.0.tgz#e8b9931bc5d18a37d271749311ef2edc83102a77"
-  integrity sha512-1TsPyMhLTx+9DLlmwg02iBW2p4poGA7LlkWJLpUY/XticFKNhPcx+l4FsIJLKl6oSUfXmAKpVljHEez1hwjqiw==
+sass@^1.24.1:
+  version "1.24.1"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.24.1.tgz#5b32ef0ee04403939d96a4963a42fd90e9408691"
+  integrity sha512-lMhl1V4Bj/lm+5c4sIt3fVzfmkyqqztpypr9dI8N0XsaeLs+gWow0der0e+I9WsRQK86SLXfEUgleERqPbR5Jw==
   dependencies:
     chokidar ">=2.0.0 <4.0.0"
 
@@ -7257,9 +7262,9 @@ terser-webpack-plugin@^2.3.0:
     webpack-sources "^1.4.3"
 
 terser@^4.1.2, terser@^4.4.3:
-  version "4.4.3"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-4.4.3.tgz#401abc52b88869cf904412503b1eb7da093ae2f0"
-  integrity sha512-0ikKraVtRDKGzHrzkCv5rUNDzqlhmhowOBqC0XqUHFpW+vJ45+20/IFBcebwKfiS2Z9fJin6Eo+F1zLZsxi8RA==
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-4.5.1.tgz#63b52d6b6ce344aa6fedcd0ee06a695799eb50bd"
+  integrity sha512-lH9zLIbX8PRBEFCTvfHGCy0s9HEKnNso1Dx9swSopF3VUnFLB8DpQ61tHxoofovNC/sG0spajJM3EIIRSTByiQ==
   dependencies:
     commander "^2.20.0"
     source-map "~0.6.1"

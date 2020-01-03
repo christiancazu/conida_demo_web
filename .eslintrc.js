@@ -31,6 +31,7 @@ module.exports = {
     'no-trailing-spaces': 'error',
     'newline-before-return': 'off',
     'no-empty-pattern': 'off',
+    'no-irregular-whitespace': ["error", { "skipComments": true }],
     'no-empty': ['error', { allowEmptyCatch: true }],
     'no-unused-vars': ['error', { args: 'all' }],
     semi: ['error', 'never'],

@@ -1,16 +1,18 @@
 <template>
-<div style="display: flex; justify-content: center; align-items: center; min-height: 100vh; margin-top: 56px">
-  <h1>
-    {{ appName }}
-  </h1>
+<div class="page-main">
+
+  <l-map />
+
 </div>
 </template>
 
 <script>
+import LMap from "@/components/leaflet/LMap"
+
 export default {
-  data: () => ({
-    appName: process.env.APP_NAME
-  }),
+  components: {
+    LMap
+  },
 
   methods: {
     logout () {

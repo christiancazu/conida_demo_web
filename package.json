@@ -20,9 +20,10 @@
   },
   "dependencies": {
     "@nuxtjs/auth": "^4.8.5",
-    "@nuxtjs/axios": "^5.9.0",
+    "@nuxtjs/axios": "^5.9.2",
     "@nuxtjs/dotenv": "^1.4.1",
     "element-ui": "^2.13.0",
+    "leaflet": "^1.6.0",
     "nuxt": "^2.11.0"
   },
   "devDependencies": {
@@ -33,7 +34,7 @@
     "eslint-plugin-vue": "^6.1.2",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
-    "sass": "^1.24.0",
+    "sass": "^1.24.1",
     "sass-loader": "^8.0.0"
   }
 }

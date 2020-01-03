@@ -1,6 +1,7 @@
 <template>
 <main>
-  <the-navbar v-if="$auth.loggedIn" />
+
+  <the-navbar />
 
   <nuxt />
 

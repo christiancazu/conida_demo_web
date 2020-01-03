@@ -31,7 +31,10 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['@/assets/sass/app.scss'],
+  css: [
+    '@/assets/sass/app.scss',
+    'node_modules/leaflet/dist/leaflet.css'
+  ],
   /*
    ** Plugins to load before mounting the App
    */
@@ -78,7 +81,7 @@ export default {
    ** Global middleware from auth module
    */
   router: {
-    middleware: ['auth']
+    // middleware: ['auth']
   },
   /**
    ** Schemes define authentication logic
@@ -125,7 +128,7 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {
+    extend (config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({

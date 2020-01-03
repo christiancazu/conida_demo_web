@@ -10,7 +10,7 @@
       v-model="form.username"
       placeholder="Usuario"
       prefix-icon="el-icon-user"
-      auto-complete="off"
+      autocomplete="off"
     />
   </el-form-item>
   <el-form-item prop="password">
@@ -19,7 +19,7 @@
       placeholder="Contraseña"
       prefix-icon="el-icon-lock"
       type="password"
-      auto-complete="off"
+      autocomplete="off"
     />
   </el-form-item>
   <el-form-item>
@@ -38,9 +38,16 @@
 <script>
 import { required } from '@/config/form.rules'
 
+import mountableAsDialogMixin from "@/mixins/mountableAsDialog.mixin"
+
 export default {
+  mixins: [mountableAsDialogMixin],
+
   data () {
     return {
+      // defined if mountableAsDialogMixin is included
+      dialogTitle: 'Registro de usuario',
+
       form: {
         username: '',
         password: ''

@@ -1,5 +1,5 @@
 <template>
-<div class="login-page">
+<div class="page-login">
 
   <sign-in>
 
@@ -9,7 +9,7 @@
         class="sign-in__form__btn"
         type="primary"
         plain
-        @click="signUp"
+        @click="$_dialogDynamicMixin_openDialog('signUp')"
       >
         Registrarse
       </el-button>
@@ -17,18 +17,11 @@
 
   </sign-in>
 
-  <base-modal
-    :modal="$store.state[storeBase.name].modalMain"
-    modal-type="modalMain"
-  >
-    <component
-      :is="$dynamicComponent"
-      :store-mounted="{
-        name: storeBase.name,
-        typeModal: 'modalMain'
-      }"
-    />
-  </base-modal>
+  <dialog-dynamic
+    v-if="dialogDynamicMixin_componentSelected.visible"
+    :component="dialogDynamic[dialogDynamicMixin_componentSelected.name]"
+    @close-modal="$_dialogDynamicMixin_closeDialog"
+  />
 
 </div>
 </template>
@@ -36,32 +29,24 @@
 <script>
 import SignIn from '@/components/sign/SignIn'
 
-import dynamicModalSetupMixin from '@/mixins/dynamicModalSetup.mixin'
+import dialogDynamicMixin from "@/mixins/dialogDynamic.mixin"
 
 export default {
+  layout: 'login',
+
   components: {
     SignIn
   },
 
-  mixins: [dynamicModalSetupMixin],
+  mixins: [dialogDynamicMixin],
 
   data: () => ({
-    storeBase: {
-      name: 'users'
-    },
-    modalMain: { // main modal settings
-      signUpComponent: {
+    dialogDynamic: {
+      signUp: {
         type: 'component',
-        folderPath: 'sign',
-        name: 'SignUp'
+        path: 'sign/SignUp'
       }
     }
-  }),
-
-  methods: {
-    signUp () {
-      this.$openModal('signUpComponent')
-    }
-  }
+  })
 }
 </script>

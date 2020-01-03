@@ -19,7 +19,7 @@
           v-model="form.username"
           placeholder="Usuario"
           prefix-icon="el-icon-user"
-          auto-complete="off"
+          autocomplete="off"
         />
       </el-form-item>
       <el-form-item prop="password">
@@ -28,7 +28,7 @@
           placeholder="Contraseña"
           prefix-icon="el-icon-lock"
           type="password"
-          auto-complete="off"
+          autocomplete="off"
         />
       </el-form-item>
       <el-form-item>
@@ -53,6 +53,9 @@
 
 <script>
 import { required } from '@/config/form.rules'
+import { toastSuccess } from '@/use/notifications'
+
+import { SESSION } from '@/config/messages'
 
 export default {
   data () {
@@ -70,7 +73,10 @@ export default {
 
   methods: {
     signIn () {
-      this.$_authServiceSignIn(this.form)
+      this.$router.push('/')
+      toastSuccess('Bienvenido al geoportal', SESSION.STARTED)
+
+      // this.$_authServiceSignIn(this.form)
     }
   }
 }
