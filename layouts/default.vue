@@ -1,5 +1,19 @@
 <template>
-<div>
+<main>
+
+  <the-navbar />
+
   <nuxt />
-</div>
+
+</main>
 </template>
+
+<script>
+import TheNavbar from '@/components/TheNavbar'
+
+export default {
+  components: {
+    TheNavbar
+  }
+}
+</script>

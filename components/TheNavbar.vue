@@ -1,0 +1,65 @@
+<template>
+<nav class="the-navbar">
+  <el-menu
+    mode="horizontal"
+    :background-color="navbarBgColor"
+    :text-color="navbarTextColor"
+    :active-text-color="navbarTextColor"
+    class="the-navbar__menu"
+    @select="selectMenuItem"
+  >
+    <div class="the-navbar__menu-items">
+
+      <el-menu-item index="home">
+        <el-avatar
+          src="/images/conida-logo.jpeg"
+          shape="square"
+        />
+        <span class="the-navbar__menu-items--text">CONIDA</span>
+      </el-menu-item>
+
+      <el-submenu index="user">
+        <template slot="title">
+          <div class="pr-5">
+            <el-avatar src="/images/veox-logo.png" />
+            VEOX
+          </div>
+        </template>
+        <el-menu-item index="logout">
+          <i class="el-icon-unlock text-light" />Cerrar sesión</el-menu-item>
+      </el-submenu>
+    </div>
+  </el-menu>
+</nav>
+</template>
+
+<script>
+import {
+  navbarBgColor,
+  navbarTextColor
+} from '@/assets/sass/_variables.scss'
+
+import { toastSuccess } from '@/use/notifications'
+
+import { SESSION } from '@/config/messages'
+
+export default {
+  data () {
+    return {
+      // scss variables
+      navbarBgColor,
+      navbarTextColor
+    }
+  },
+
+  methods: {
+    selectMenuItem (key) {
+      if (key === 'logout') {
+        this.$_authServiceSignOut()
+        this.$router.push('/login')
+        toastSuccess('', SESSION.ENDED)
+      }
+    }
+  }
+}
+</script>
