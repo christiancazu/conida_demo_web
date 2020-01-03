@@ -1,20 +1,21 @@
 <template>
-<el-dialog
+<el-drawer
+  ref="drawer"
   :title="title"
   :visible.sync="visible"
-  :close-on-click-modal="false"
   append-to-body
-  destroy-on-close
-  center
-  @close="closeModal"
+  direction="rtl"
+  size="50%"
 >
 
-  <component
-    :is="dynamicComponent"
-    @set-dynamic-title="setDynamicTitle"
-  />
+  <keep-alive>
+    <component
+      :is="dynamicComponent"
+      @set-dynamic-title="setDynamicTitle"
+    />
+  </keep-alive>
 
-</el-dialog>
+</el-drawer>
 </template>
 
 <script>
@@ -23,8 +24,8 @@ export default {
     component: {
       type: Object,
       default: () => ({
-        type: { type: String, required: true },
-        path: { type: String, required: true }
+        type: 'component',
+        path: 'fallback/Fallback'
       })
     }
   },
@@ -43,20 +44,20 @@ export default {
   },
 
   mounted () {
-    this.visible = true
+    // prevent tabindex on title when drawer is visible
+    this.$refs.drawer.$el.firstChild.querySelector('span').removeAttribute('tabindex')
   },
 
   methods: {
-    closeModal () {
-      this.visible = false
-      this.$emit('close-modal')
-    },
-
     /**
      * setting from child dynamic component
      */
     setDynamicTitle (titleFromDynamicChild) {
       this.title = titleFromDynamicChild
+    },
+
+    setDrawerVisible () {
+      this.visible = true
     }
   }
 }

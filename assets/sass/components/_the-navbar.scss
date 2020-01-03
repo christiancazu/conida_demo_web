@@ -1,7 +1,4 @@
 .the-navbar {
-  position: fixed;
-  top: 0;
-
   @extend .full-width;
   &__menu {
     @extend .px-5;

@@ -55,7 +55,7 @@ export default {
   methods: {
     selectMenuItem (key) {
       if (key === 'logout') {
-        this.$_authServiceSignOut()
+        // this.$_authServiceSignOut()
         this.$router.push('/login')
         toastSuccess('', SESSION.ENDED)
       }
