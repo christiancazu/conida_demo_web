@@ -1,0 +1,12 @@
+.the-sidebar {
+  width: 300px;
+
+  // fix padding when type="border-card" is used on <el-tabs> component
+  &>.el-tabs__content {
+    @extend .pa-0;
+  }
+
+  & .el-tabs__item {
+    width: 150px; // tabs width
+  }
+}
