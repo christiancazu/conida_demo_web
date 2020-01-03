@@ -1,13 +1,23 @@
 <template>
-<h1>
-  {{ appName }}
-</h1>
+<div class="page-main">
+
+  <l-map />
+
+</div>
 </template>
 
 <script>
+import LMap from "@/components/leaflet/LMap"
+
 export default {
-  data: () => ({
-    appName: process.env.APP_NAME
-  })
+  components: {
+    LMap
+  },
+
+  methods: {
+    logout () {
+      this.$_authServiceSignOut()
+    }
+  }
 }
 </script>
