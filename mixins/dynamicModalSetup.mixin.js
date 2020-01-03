@@ -8,7 +8,7 @@ export default {
   },
 
   computed: {
-    $dynamicComponent() {
+    $dynamicComponent () {
       const { type, folderPath, name } = this.$store.state[this.storeBase.name].modalMain
       return type === 'page'
         ? () => import(`@/pages/${folderPath}/${name}`)

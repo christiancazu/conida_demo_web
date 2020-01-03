@@ -22,7 +22,7 @@
         <template slot="title">
           <div class="pr-5">
             <el-avatar src="/images/veox-logo.png" />
-            {{ $auth.user.name }}
+            VEOX
           </div>
         </template>
         <el-menu-item index="logout">
@@ -39,6 +39,10 @@ import {
   navbarTextColor
 } from '@/assets/sass/_variables.scss'
 
+import { toastSuccess } from '@/use/notifications'
+
+import { SESSION } from '@/config/messages'
+
 export default {
   data () {
     return {
@@ -52,6 +56,8 @@ export default {
     selectMenuItem (key) {
       if (key === 'logout') {
         this.$_authServiceSignOut()
+        this.$router.push('/login')
+        toastSuccess('', SESSION.ENDED)
       }
     }
   }

@@ -78,7 +78,7 @@ export default {
    ** Global middleware from auth module
    */
   router: {
-    middleware: ['auth']
+    // middleware: ['auth']
   },
   /**
    ** Schemes define authentication logic

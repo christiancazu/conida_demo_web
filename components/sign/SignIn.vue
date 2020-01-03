@@ -53,6 +53,9 @@
 
 <script>
 import { required } from '@/config/form.rules'
+import { toastSuccess } from '@/use/notifications'
+
+import { SESSION } from '@/config/messages'
 
 export default {
   data () {
@@ -70,7 +73,10 @@ export default {
 
   methods: {
     signIn () {
-      this.$_authServiceSignIn(this.form)
+      this.$router.push('/')
+      toastSuccess('Bienvenido al geoportal', SESSION.STARTED)
+
+      // this.$_authServiceSignIn(this.form)
     }
   }
 }

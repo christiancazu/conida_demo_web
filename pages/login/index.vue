@@ -9,15 +9,24 @@
         class="sign-in__form__btn"
         type="primary"
         plain
-        @click="signUp"
+        @click="openModal('signUpComponent')"
       >
         Registrarse
+      </el-button>
+      <el-button
+        :disabled="$store.state.spinners.processingForm"
+        class="sign-in__form__btn"
+        type="primary"
+        plain
+        @click="openModal('testComponent')"
+      >
+        test
       </el-button>
     </template>
 
   </sign-in>
 
-  <base-modal
+  <!-- <base-modal
     :modal="$store.state[storeBase.name].modalMain"
     modal-type="modalMain"
   >
@@ -28,7 +37,13 @@
         typeModal: 'modalMain'
       }"
     />
-  </base-modal>
+  </base-modal> -->
+
+  <dialog-dynamic
+    v-if="selectedComponent.visible"
+    :component="modalMain[selectedComponent.name]"
+    @close-modal="closeModal"
+  />
 
 </div>
 </template>
@@ -38,9 +53,14 @@ import SignIn from '@/components/sign/SignIn'
 
 import dynamicModalSetupMixin from '@/mixins/dynamicModalSetup.mixin'
 
+import DialogDynamic from '@/components/dialog/DialogDynamic'
+
 export default {
+  layout: 'login',
+
   components: {
-    SignIn
+    SignIn,
+    DialogDynamic
   },
 
   mixins: [dynamicModalSetupMixin],
@@ -54,13 +74,29 @@ export default {
         type: 'component',
         folderPath: 'sign',
         name: 'SignUp'
+      },
+      testComponent: {
+        type: 'component',
+        folderPath: 'dialog',
+        name: 'Test'
       }
+    },
+    selectedComponent: {
+      name: '',
+      visible: false
     }
   }),
 
   methods: {
-    signUp () {
-      this.$openModal('signUpComponent')
+    openModal (componentName) {
+      this.selectedComponent.name = componentName
+      this.selectedComponent.visible = true
+      // console.warn(this.modalMain[this.selectedComponent]);
+      // this.$openModal('signUpComponent')
+    },
+
+    closeModal () {
+      this.selectedComponent.visible = false
     }
   }
 }
