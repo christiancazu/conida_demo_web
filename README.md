@@ -1,6 +1,6 @@
-# conida_web
+# CONIDA
 
-> CONIDA
+> DEMO
 
 ## Build Setup
 
