@@ -1,5 +1,7 @@
-@import 'variables.scss';
+@import 'variables';
+@import 'utils.sass';
 @import 'mixins/mixins.scss';
 @import 'components/components.scss';
 @import 'pages/pages.scss';
-@import 'global.scss';
+@import 'element.sass';
+@import 'global';
