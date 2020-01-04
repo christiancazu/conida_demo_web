@@ -9,31 +9,43 @@
     @select="selectMenuItem"
   >
     <div class="the-navbar__menu-items">
+      <div class="the-navbar__menu-items--left">
 
-      <el-menu-item index="home">
-        <el-avatar
-          src="/images/conida-logo.jpeg"
-          shape="square"
-        />
-        <span class="the-navbar__menu-items--text">CONIDA</span>
-      </el-menu-item>
+        <btn-collapse-sidebar />
 
-      <el-submenu index="user">
-        <template slot="title">
-          <div class="pr-5">
-            <el-avatar src="/images/veox-logo.png" />
-            VEOX
-          </div>
-        </template>
-        <el-menu-item index="logout">
-          <i class="el-icon-unlock text-light" />Cerrar sesión</el-menu-item>
-      </el-submenu>
+        <el-menu-item index="home">
+          <el-avatar
+            size="small"
+            src="/images/conida-logo.jpeg"
+            shape="square"
+          />
+          <span class="the-navbar__menu-items--text">CONIDA</span>
+        </el-menu-item>
+      </div>
+
+      <div class="the-navbar__menu-items--right">
+        <el-submenu index="user">
+          <template slot="title">
+            <div class="pr-5">
+              <el-avatar
+                size="small"
+                src="/images/veox-logo.png"
+              />
+              VEOX
+            </div>
+          </template>
+          <el-menu-item index="logout">
+            <i class="el-icon-unlock text-light" />Cerrar sesión</el-menu-item>
+        </el-submenu>
+      </div>
     </div>
   </el-menu>
 </nav>
 </template>
 
 <script>
+import BtnCollapseSidebar from '@/components/btn/BtnCollapseSidebar'
+
 import {
   navbarBgColor,
   navbarTextColor
@@ -44,6 +56,10 @@ import { toastSuccess } from '@/use/notifications'
 import { SESSION } from '@/config/messages'
 
 export default {
+  components: {
+    BtnCollapseSidebar
+  },
+
   data () {
     return {
       // scss variables

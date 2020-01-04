@@ -2,14 +2,16 @@
 <el-container>
 
   <el-header
-    height="56px" class="px-0"
+    :height="navbarHeight" class="px-0"
   >
     <the-navbar />
   </el-header>
 
   <el-container>
 
-    <the-sidebar />
+    <el-aside :width="sidebarWidth">
+      <the-sidebar />
+    </el-aside>
 
     <el-container>
 
@@ -30,10 +32,21 @@
 import TheNavbar from '@/components/TheNavbar'
 import TheSidebar from '@/components/TheSidebar'
 
+import {
+  navbarHeight,
+  sidebarWidth
+} from '@/assets/sass/_variables.scss'
+
 export default {
   components: {
     TheNavbar,
     TheSidebar
-  }
+  },
+
+  data: () => ({
+    // scss variables
+    navbarHeight,
+    sidebarWidth
+  })
 }
 </script>

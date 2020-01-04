@@ -5,12 +5,16 @@ $--color-primary: teal;
 $--color-app-text: #28A398;
 $--color-menu-nav-text: #f2f6fc;
 
+$--navbar-height: 42px;
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
   navbarBgColor: $--color-primary;
   navbarTextColor: $--color-menu-nav-text;
+  navbarHeight: $--navbar-height;
+
   sidebarBgColor: white;
+  sidebarWidth: 300px;
   // sidebarTextColor: ;
   sidebarActiveTextColor: $--color-app-text;
 }
