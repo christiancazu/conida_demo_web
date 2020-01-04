@@ -6,20 +6,28 @@ export default {
   },
 
   data: () => ({
-    dialogDynamicMixin_componentSelected: {
-      name: '',
-      visible: false
-    }
+    dialogDynamicMixin_componentSelected: {}
   }),
 
   methods: {
-    $_dialogDynamicMixin_openDialog (componentName) {
-      this.dialogDynamicMixin_componentSelected.name = componentName
-      this.dialogDynamicMixin_componentSelected.visible = true
+    /**
+     * setting dialogDynamic selected on dialog-dynamic component
+     *
+     * @param {Object} componentName
+     */
+    $_dialogDynamicMixin_dialogOpen (componentName) {
+      this.dialogDynamicMixin_componentSelected = componentName
+      this.$refs.dialogDynamic.setDialogVisible()
     },
 
-    $_dialogDynamicMixin_closeDialog () {
-      this.dialogDynamicMixin_componentSelected.visible = false
+    /**
+     * setting fallback component when dialog is closed
+     */
+    $_dialogDynamicMixin_dialogClose () {
+      this.dialogDynamicMixin_componentSelected = {
+        type: 'component',
+        path: 'fallback/Fallback'
+      }
     }
   }
 }
