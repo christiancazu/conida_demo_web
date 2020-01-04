@@ -2,7 +2,7 @@
 $--color-primary: teal;
 
 /* custom text color */
-$--color-app-text: #28A398; 
+$--color-app-text: #28A398;
 $--color-menu-nav-text: #f2f6fc;
 
 // the :export directive is the magic sauce for webpack
@@ -10,6 +10,9 @@ $--color-menu-nav-text: #f2f6fc;
 :export {
   navbarBgColor: $--color-primary;
   navbarTextColor: $--color-menu-nav-text;
+  sidebarBgColor: white;
+  // sidebarTextColor: ;
+  sidebarActiveTextColor: $--color-app-text;
 }
 
 /* icon font path, required */

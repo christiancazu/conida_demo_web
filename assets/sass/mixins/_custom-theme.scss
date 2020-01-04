@@ -1,12 +1,12 @@
 // experimental custom colors
 
-$--color-secondary: gold !default;
+$--color-secondary: tomato !default;
 $--color-secondary-text: #DCDFE6 !default;
 
 @mixin secondary($bgColor, $textColor: false) {
   .el-button--secondary {
-    background-color: $bgColor;
-    border-color: $bgColor;
+    background-color: $bgColor !important;
+    border-color: $bgColor !important;
 
     &:hover,
     &.active,

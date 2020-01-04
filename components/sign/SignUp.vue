@@ -38,15 +38,15 @@
 <script>
 import { required } from '@/config/form.rules'
 
-import mountableAsDialogMixin from "@/mixins/mountableAsDialog.mixin"
+import mountableAsDynamicMixin from "@/mixins/mountableAsDynamic.mixin"
 
 export default {
-  mixins: [mountableAsDialogMixin],
+  mixins: [mountableAsDynamicMixin],
 
   data () {
     return {
-      // defined if mountableAsDialogMixin is included
-      dialogTitle: 'Registro de usuario',
+      // defined if mountableAsDynamicMixin is included
+      dynamicTitle: 'Registro de usuario #TODO FORM',
 
       form: {
         username: '',
