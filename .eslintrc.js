@@ -93,7 +93,7 @@ module.exports = {
     // VUE
     'vue/component-name-in-template-casing': ['error', 'kebab-case'],
     'vue/max-attributes-per-line': [
-      'error',
+      'warn',
       {
         singleline: 1,
         multiline: {
@@ -103,21 +103,21 @@ module.exports = {
       }
     ],
     'vue/html-closing-bracket-newline': [
-      'error',
+      'warn',
       {
         singleline: 'never',
         multiline: 'always'
       }
     ],
     'vue/script-indent': [
-      'error',
+      'warn',
       2,
       {
         baseIndent: 0
       }
     ],
     'vue/html-indent': [
-      'error',
+      'warn',
       2,
       {
         attribute: 1,
