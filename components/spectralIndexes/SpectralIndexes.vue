@@ -22,48 +22,20 @@
       </div>
     </template>
   </el-autocomplete>
-  <!-- sacar component card -->
-  <el-card
-    shadow="always"
-    class="card-spectral-index"
-  >
-    <div class="content-spectral-index">
-      <el-avatar
-        class="image"
-        shape="square"
-        :size="70"
-        src="https://apps.sentinel-hub.com/sentinel-playground/previews/b0eec84c-1-NATURAL-COLOR.jpeg"
-      />
-      <div class="detail">
-        <h5 class="title">INDICE NDVI</h5>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </div>
-    </div>
-  </el-card>
-  <el-card
-    shadow="always"
-    class="card-spectral-index"
-  >
-    <div class="content-spectral-index">
-      <el-avatar
-        class="image"
-        shape="square"
-        :size="70"
-        src="https://apps.sentinel-hub.com/sentinel-playground/previews/b0eec84c-1-NATURAL-COLOR.jpeg"
-      />
-      <div class="detail">
-        <h5 class="title">INDICE NDVI</h5>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
-      </div>
-    </div>
-  </el-card>
+
+  <card-spectral-index />
+
 </el-main>
 </template>
 
 <script>
 import mountableAsDynamicMixin from "@/mixins/mountableAsDynamic.mixin"
+import CardSpectralIndex from '@/components/spectralIndexes/CardSpectralIndex.vue'
 
 export default {
+  components:{
+    CardSpectralIndex
+  },
   mixins: [mountableAsDynamicMixin],
 
   data: () => ({

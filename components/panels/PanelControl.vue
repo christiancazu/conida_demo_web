@@ -61,7 +61,7 @@ export default {
         title: 'Indices Espectrales', icon: 'el-icon-menu',
         component: {
           type: 'component',
-          path:'spectralIndexes/SpectralIndexItem'
+          path:'spectralIndexes/SpectralIndexes'
         }
       }
     ]
