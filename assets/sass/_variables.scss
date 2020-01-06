@@ -7,6 +7,8 @@ $--color-success: #E91E63;
 $--color-app-text: #28A398;
 $--color-menu-nav-text: #f2f6fc;
 
+$--card-padding: 0.5rem 0.8rem;
+
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
