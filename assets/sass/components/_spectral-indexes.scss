@@ -2,9 +2,18 @@
   display: flex;
   .content {
     padding-left: 0.8rem;
-    // width: 100%;
   }
-  .content--title {
+  .content__title {
     font-weight: bold;
+  }
+}
+.scope-item {
+  display: flex;
+  align-items: center;
+  .item-image {
+    margin: .25rem 0;
+  }
+  .item-content {
+    padding-left: .8rem;
   }
 }
