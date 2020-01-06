@@ -1,14 +1,18 @@
 .card-spectral-index {
-  display: flex;
-  .image img {
-    width: 4.375rem;
-    height: 4.375rem;
-  }
-  .content {
-    padding-left: 0.8rem;
-  }
-  .content__title {
-    font-weight: bold;
+  margin-bottom: .5rem;
+  .content-spectral-index {
+    display: flex;
+    align-items: center;
+    .image img {
+      width: 4.375rem;
+      height: 4.375rem;
+    }
+    .detail {
+      padding-left: 0.8rem;
+      .title {
+        font-weight: bold;
+      }
+    }
   }
 }
 .scope-item {
