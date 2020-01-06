@@ -5,12 +5,13 @@
   :close-on-click-modal="false"
   append-to-body
   destroy-on-close
-  center
+  top="2vh"
   @close="dialogClose"
 >
 
   <component
     :is="dynamicComponent"
+    :properties="properties"
     @set-dynamic-title="setDynamicTitle"
   />
 
@@ -22,6 +23,10 @@ import WrapperDynamicSetup from '@/components/base/setup/WrapperDynamicSetup'
 
 export default {
   extends: WrapperDynamicSetup, // parent logic
+
+  data: () => ({
+    properties: {}
+  }),
 
   methods: {
     dialogClose () {

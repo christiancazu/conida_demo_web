@@ -35,6 +35,13 @@ export default {
       this.title = titleFromDynamicChild
     },
 
+    /**
+     * properties to dynamic child component
+     */
+    $setPropertiesToChild (properties) {
+      this.properties = properties
+    },
+
     setDialogVisible () {
       this.visible = true
     },

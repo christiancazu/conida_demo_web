@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 import { Icon } from 'leaflet'
 
 delete Icon.Default.prototype._getIconUrl
@@ -8,10 +10,12 @@ Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 })
 
-import Vue from 'vue'
+/**
+ * injecting observable variable to get context of LDraw component
+ * to get access to his methods
+ */
+const ctxLDraw = Vue.observable({instance: null})
 
-// Vue.prototype.$test = null
-Vue.prototype.XXX = 'x'
-export default ({ app }, inject) => {
-  inject('test', () => app.XXX)
+export default ({}, inject) => {
+  inject('ctxLDraw', ctxLDraw)
 }
