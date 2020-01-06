@@ -4,10 +4,27 @@ body {
   margin: 0;
 }
 
-.text-center {
-  text-align: center;
-}
-
 .full-width {
   width: 100%;
 }
+
+.app-aside{
+  background-color: $--color-secondary;
+  min-height: 100vh;
+}
+
+.app-card-info{
+  h1{
+    margin: 0;
+    color: $--color-secondary;
+    font-weight: bolder;
+    margin-bottom: .5em;
+    font-size: 1rem;
+  }
+  span{
+    font-size: .8rem;
+    font-weight: lighter;
+    color: #9E9E9E;
+  }
+}
+    
