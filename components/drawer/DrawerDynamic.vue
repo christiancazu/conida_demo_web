@@ -19,46 +19,14 @@
 </template>
 
 <script>
+import WrapperDynamicSetup from '@/components/base/setup/WrapperDynamicSetup'
+
 export default {
-  props: {
-    component: {
-      type: Object,
-      default: () => ({
-        type: 'component',
-        path: 'fallback/Fallback'
-      })
-    }
-  },
-
-  data: () => ({
-    visible: false,
-    title: ''
-  }),
-
-  computed: {
-    dynamicComponent () {
-      return this.component.type === 'page'
-        ? () => import('@/pages/' + this.component.path)
-        : () => import('@/components/' + this.component.path)
-    }
-  },
+  extends: WrapperDynamicSetup, // parent logic
 
   mounted () {
     // prevent tabindex on title when drawer is visible
     this.$refs.drawer.$el.firstChild.querySelector('span').removeAttribute('tabindex')
-  },
-
-  methods: {
-    /**
-     * setting from child dynamic component
-     */
-    setDynamicTitle (titleFromDynamicChild) {
-      this.title = titleFromDynamicChild
-    },
-
-    setDrawerVisible () {
-      this.visible = true
-    }
   }
 }
 </script>

@@ -6,7 +6,7 @@
   append-to-body
   destroy-on-close
   center
-  @close="closeModal"
+  @close="dialogClose"
 >
 
   <component
@@ -18,45 +18,14 @@
 </template>
 
 <script>
+import WrapperDynamicSetup from '@/components/base/setup/WrapperDynamicSetup'
+
 export default {
-  props: {
-    component: {
-      type: Object,
-      default: () => ({
-        type: { type: String, required: true },
-        path: { type: String, required: true }
-      })
-    }
-  },
-
-  data: () => ({
-    visible: false,
-    title: ''
-  }),
-
-  computed: {
-    dynamicComponent () {
-      return this.component.type === 'page'
-        ? () => import('@/pages/' + this.component.path)
-        : () => import('@/components/' + this.component.path)
-    }
-  },
-
-  mounted () {
-    this.visible = true
-  },
+  extends: WrapperDynamicSetup, // parent logic
 
   methods: {
-    closeModal () {
-      this.visible = false
-      this.$emit('close-modal')
-    },
-
-    /**
-     * setting from child dynamic component
-     */
-    setDynamicTitle (titleFromDynamicChild) {
-      this.title = titleFromDynamicChild
+    dialogClose () {
+      this.$emit('dialog-close')
     }
   }
 }

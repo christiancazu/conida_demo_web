@@ -11,12 +11,16 @@ $--card-padding: 0.5rem 0.8rem;
 /* el-main component */
 $--main-padding: .9rem;
 
+$--navbar-height: 42px;
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
   navbarBgColor: $--color-secondary;
   navbarTextColor: $--color-menu-nav-text;
+  navbarHeight: $--navbar-height;
+
   sidebarBgColor: white;
+  sidebarWidth: 300px;
   // sidebarTextColor: ;
   sidebarActiveTextColor: $--color-app-text;
 }

@@ -9,7 +9,7 @@
         class="sign-in__form__btn"
         type="primary"
         plain
-        @click="$_dialogDynamicMixin_openDialog('signUp')"
+        @click="$_dialogDynamicMixin_dialogOpen('signUp')"
       >
         Registrarse
       </el-button>
@@ -18,9 +18,9 @@
   </sign-in>
 
   <dialog-dynamic
-    v-if="dialogDynamicMixin_componentSelected.visible"
-    :component="dialogDynamic[dialogDynamicMixin_componentSelected.name]"
-    @close-modal="$_dialogDynamicMixin_closeDialog"
+    ref="dialogDynamic"
+    :component="dialogDynamic[dialogDynamicMixin_componentSelected]"
+    @dialog-close="$_dialogDynamicMixin_dialogClose"
   />
 
 </div>
