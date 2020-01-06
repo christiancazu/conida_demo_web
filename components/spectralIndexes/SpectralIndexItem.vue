@@ -23,10 +23,39 @@
     </template>
   </el-autocomplete>
   <!-- sacar component card -->
-  <el-card>
+  <el-card shadow="always">
     <div class="card-spectral-index">
       <el-avatar
         class="image"
+        shape="square"
+        :size="70"
+        src="https://apps.sentinel-hub.com/sentinel-playground/previews/b0eec84c-1-NATURAL-COLOR.jpeg"
+      />
+      <div class="content">
+        <h5 class="content__title">INDICE NDVI</h5>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+      </div>
+    </div>
+  </el-card>
+  <el-card shadow="always">
+    <div class="card-spectral-index">
+      <el-avatar
+        class="image"
+        shape="square"
+        :size="70"
+        src="https://apps.sentinel-hub.com/sentinel-playground/previews/b0eec84c-1-NATURAL-COLOR.jpeg"
+      />
+      <div class="content">
+        <h5 class="content__title">INDICE NDVI</h5>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+      </div>
+    </div>
+  </el-card>
+  <el-card shadow="always">
+    <div class="card-spectral-index">
+      <el-avatar
+        class="image"
+        shape="square"
         :size="70"
         src="https://apps.sentinel-hub.com/sentinel-playground/previews/b0eec84c-1-NATURAL-COLOR.jpeg"
       />
