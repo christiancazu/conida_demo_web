@@ -33,7 +33,8 @@ export default {
    */
   css: [
     '@/assets/sass/app.scss',
-    'node_modules/leaflet/dist/leaflet.css'
+    'node_modules/leaflet/dist/leaflet.css',
+    'node_modules/leaflet-draw/dist/leaflet.draw.css'
   ],
   /*
    ** Plugins to load before mounting the App
@@ -42,6 +43,7 @@ export default {
     '@/plugins/element-ui',
     '@/plugins/axios',
     '@/plugins/services',
+    { src: '@/plugins/leaflet', ssr: false }
   ],
   /*
    ** Nuxt.js modules

@@ -1,5 +1,5 @@
 <template>
-<el-container>
+<el-container ref="elContainer">
 
   <el-header
     :height="navbarHeight" class="px-0"
@@ -47,6 +47,12 @@ export default {
     // scss variables
     navbarHeight,
     sidebarWidth
-  })
+  }),
+
+  methods: {
+    ga () {
+      console.warn('GAAAAAAAA')
+    }
+  }
 }
 </script>
