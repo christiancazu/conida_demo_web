@@ -15,7 +15,9 @@
     }
   }
   .actions {
-    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     img {
       object-fit: cover;
       height: 100%;
@@ -25,6 +27,9 @@
       span {
         display: flex;
         align-items: center;
+      }
+      i {
+        font-size: 1.3rem;
       }
     }
   }

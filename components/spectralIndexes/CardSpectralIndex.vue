@@ -27,6 +27,12 @@
             class="material-icons"
           >visibility_off</i>
         </el-button>
+        <el-button
+          type="text"
+          class="actions__btn"
+        >
+          <i class="el-icon-full-screen" />
+        </el-button>
       </div>
     </div>
   </div>
