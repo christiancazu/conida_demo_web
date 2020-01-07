@@ -6,6 +6,7 @@
   append-to-body
   destroy-on-close
   top="2vh"
+  class="dialog-responsive"
   @close="dialogClose"
 >
 

@@ -14,9 +14,9 @@
         :url="tileLayer.url"
       />
 
-      <l-draw @selected-geojson="SelectedGeoJSON" />
-
-      <l-control />
+      <l-feature-group>
+        <l-draw @selected-geojson="selectedGeoJSON" />
+      </l-feature-group>
 
     </l-map>
   </client-only>
@@ -34,9 +34,10 @@
 import {
   LMap,
   LTileLayer,
-  LControl
+  LFeatureGroup
 } from 'vue2-leaflet'
 
+// import LDraw from '@/components/leaflet/LDraw'
 import LDraw from '@/components/leaflet/LDraw'
 
 import dialogDynamicMixin from "@/mixins/dialogDynamic.mixin"
@@ -45,7 +46,7 @@ export default {
   components: {
     LMap,
     LTileLayer,
-    LControl,
+    LFeatureGroup,
     LDraw
   },
 
@@ -79,7 +80,7 @@ export default {
   },
 
   methods: {
-    SelectedGeoJSON (geoJSON) {
+    selectedGeoJSON (geoJSON) {
       this.$_dialogDynamicMixin_dialogOpen('geoJson')
       this.$refs.dialogDynamic.$setPropertiesToChild(geoJSON)
     },
@@ -90,7 +91,7 @@ export default {
        */
       const $mapWrapper = document.querySelector('.map-wrapper')
 
-      setTimeout(() => $mapWrapper.style.width = '100%')
+      setTimeout(() => $mapWrapper.style.width = '100%', 1)
     },
 
     logout () {

@@ -1,6 +1,7 @@
 <script>
 /**
- * Listener on click to bindPopup menu buttons
+ * Listener on click buttons to bindPopup menu buttons
+ * accessing to vue.obserbable $ctxLDraw instance component
  */
 document.addEventListener('click', e => {
   if (e.target.tagName === 'BUTTON' && e.target.classList.contains('btn-leaflet-popup')) {
@@ -11,37 +12,40 @@ document.addEventListener('click', e => {
   }
 })
 
-import 'leaflet-draw'
+import { Control, Draw } from 'leaflet'
 
 import { findRealParent } from 'vue2-leaflet'
 
-import { FeatureGroup, Control, Draw } from 'leaflet'
+import 'leaflet-draw'
 
 export default {
   data () {
     return {
-      drawnItems: null,
-      drawControl: null,
-      objectMap: null,
-      ready: false,
-      parentContainer: null
+      LFeatureGroup: null,
+      LMap: null
     }
   },
 
   mounted () {
-    // assigning context to $ctxLDraw.instance to be access from out Vue instance
+    /**
+     * assigning context on Vue.observable to be access from outside Vue instance
+     *
+     * @instance $ctxLDraw.instance
+     */
     this.$ctxLDraw.instance = this
 
-    this.parentContainer = findRealParent(this.$parent).mapObject
+    // LFeatureGroup parent
+    this.LFeatureGroup = findRealParent(this.$parent).mapObject
+    // LMap parent
+    this.LMap = findRealParent(this.$parent.$parent).mapObject
 
-    this.drawnItems = new FeatureGroup()
+    this.LMap.addLayer(this.LFeatureGroup)
 
-    this.parentContainer.addLayer(this.drawnItems)
-
-    this.drawControl = new Control.Draw({
+    this.mapObject = new Control.Draw({
       edit: {
-        featureGroup: this.drawnItems
+        featureGroup: this.LFeatureGroup
       },
+      // draw settings
       draw: {
         marker: false,
         circle: false,
@@ -49,75 +53,113 @@ export default {
       }
     })
 
-    this.parentContainer.addControl(this.drawControl)
+    this.LMap.addControl(this.mapObject)
 
-    this.drawnItems.addTo(this.parentContainer)
+    this.LFeatureGroup.addTo(this.LMap)
 
-    this.parentContainer.eachLayer((layer) => {
-      layer.on('contextmenu', (l) => {
-        this.drawnItems.removeLayer(l.layer)
-      })
-    })
+    // Lmap events with leaflet-draw plugin
+    this.onDrawCREATED()
+    /**
+     * TODO: DRAW EVENTS
+     */
 
     this.$nextTick(() => {
       this.$emit('ready', this.mapObject)
-      this.parentContainer.on(Draw.Event.CREATED, (e) => {
-        const layer = e.layer
-
-        this.drawnItems.addLayer(layer)
-        layer.bindPopup(this.popupTemplate(layer._leaflet_id))
-      })
     })
   },
 
   methods: {
+    /**
+     * from popupMenu buttons, action & _leaflet_id
+     *
+     * @param {String, int}
+     */
     onClickBtnPopupMenu (action, id) {
       let currentLayer = null
 
-      this.parentContainer.eachLayer((layer) => {
+      this.LMap.eachLayer((layer) => {
         if(layer._leaflet_id === id) currentLayer = layer
       })
 
-      if (action === 'delete') this.deleteLayer(currentLayer)
-      if (action === 'details') this.detailsLayer(currentLayer)
+      switch (action) {
+      case 'register':
+        this.onRegisterLayer(currentLayer)
+        break
+      case 'edit':
+        this.onEditLayer(currentLayer)
+        break
+      case 'delete':
+        this.onDeleteLayer(currentLayer)
+        break
+      }
     },
 
-    deleteLayer (layer) {
-      this.drawnItems.removeLayer(layer)
+    /**
+     * Lmap event @event CREATED
+     * @package leaflet-draw
+     */
+    onDrawCREATED () {
+      this.LMap.on(Draw.Event.CREATED, ({ layer }) => {
+        this.LFeatureGroup.addLayer(layer)
+        // bindPopup to layer created
+        layer.bindPopup(this.popupTemplate(layer._leaflet_id))
+      })
     },
 
-    detailsLayer (layer) {
+    /**
+     * @emits register-layer
+     * @param {Layer<Leaflet>}
+     */
+    onRegisterLayer (layer) {
       this.$emit('selected-geojson', layer.toGeoJSON())
-      // layersDetails.editing.enable()
     },
 
+    /**
+     * @emits edit-layer
+     * @param {Layer<Leaflet>}
+     */
+    onEditLayer (layer) {
+      layer.editing.enable()
+    },
+
+    /**
+     * @emits delete-layer
+     * @param {Layer<Leaflet>}
+     */
+    onDeleteLayer (layer) {
+      this.LFeatureGroup.removeLayer(layer)
+    },
+
+    /**
+     * custom popup menu buttons template
+     *
+     * @param {id}
+     */
     popupTemplate (id) {
       return `
         <button 
-          type="button"
+          data-tooltip="guardar"
           data-leaflet-id="${id}"
-          class="btn-leaflet-popup el-button el-button--succes is-circle pa-0" 
-          style="width: 28px; height: 28px;"
+          data-action="register"
+          class="btn-leaflet-popup el-button el-button--success is-circle"
         >
-          <i class="el-icon-star-off" style="pointer-events: none"></i>
+          <i class="el-icon-circle-plus-outline"></i>
         </button>
         <button 
-          type="button"
+          data-tooltip="editar"
           data-leaflet-id="${id}"
-          data-action="details"
-          class="btn-leaflet-popup el-button el-button--warning is-circle pa-0" 
-          style="width: 28px; height: 28px;"
+          data-action="edit"
+          class="btn-leaflet-popup el-button el-button--warning is-circle"
         >
-          <i class="el-icon-star-off" style="pointer-events: none"></i>
+          <i class="el-icon-edit"></i>
         </button>
         <button 
-          type="button"
+          data-tooltip="eliminar"
+          data-leaflet-id="${id}"
           data-action="delete"
-          data-leaflet-id="${id}"
-          class="btn-leaflet-popup el-button el-button--danger is-circle pa-0" 
-          style="width: 28px; height: 28px;"
+          class="btn-leaflet-popup el-button el-button--danger is-circle"
         >
-          <i class="el-icon-star-off" style="pointer-events: none"></i>
+          <i class="el-icon-delete"></i>
         </button>
       `
     }

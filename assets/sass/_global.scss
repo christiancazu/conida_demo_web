@@ -11,3 +11,13 @@ body {
 .full-width {
   width: 100%;
 }
+
+// dialog
+.dialog-responsive .el-dialog {
+  @media (max-width: 992px) {
+    width: calc(75% - 1rem);
+  }
+  @media (max-width: 768px) {
+    width: calc(100% - 1rem);
+  }
+}

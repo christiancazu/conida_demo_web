@@ -7,7 +7,7 @@ export const toastSuccess = (message, title = 'Correcto') => {
     type: 'success'
   })
 }
-export const toastInfo = (message, title = 'Ateción') => {
+export const toastInfo = (message, title = 'Atención') => {
   Notification.success({
     title,
     message,
