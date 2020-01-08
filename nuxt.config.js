@@ -48,6 +48,7 @@ export default {
     '@/plugins/element-ui',
     '@/plugins/axios',
     '@/plugins/services',
+    '@/plugins/api',
     { src: '@/plugins/leaflet', ssr: false }
   ],
   /*
@@ -88,7 +89,7 @@ export default {
    ** Global middleware from auth module
    */
   router: {
-    // middleware: ['auth']
+    middleware: ['auth']
   },
   /**
    ** Schemes define authentication logic

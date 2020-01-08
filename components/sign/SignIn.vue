@@ -2,8 +2,11 @@
 <div class="sign-in">
   <el-card class="sign-in__form">
     <el-image
-      class="sign-in__form__logo"
-      src="/images/veox-logo.png"
+      :class="[
+        {'logo-animation': $store.state.spinners.processingForm},
+        ['sign-in__form__logo']
+      ]"
+      src="images/veox-logo.png"
       fit="fill"
     />
     <h1 class="sign-in__form__title">VEOX</h1>
@@ -52,10 +55,12 @@
 </template>
 
 <script>
-import { required } from '@/config/form.rules'
-import { toastSuccess } from '@/use/notifications'
 
-import { SESSION } from '@/config/messages'
+import { $_notify_error } from "@/use/notifications"
+
+import { ERRORS } from "@/config/messages"
+
+import { required } from '@/config/form.rules'
 
 export default {
   data () {
@@ -72,11 +77,14 @@ export default {
   },
 
   methods: {
-    signIn () {
-      this.$router.push('/')
-      toastSuccess('Bienvenido al geoportal', SESSION.STARTED)
+    async signIn () {
+      let isFormValid = false
 
-      // this.$_authServiceSignIn(this.form)
+      await this.$refs.form.validate(result => isFormValid = result)
+      if (isFormValid)
+        this.$_authServiceSignIn(this.form)
+      else
+        $_notify_error(ERRORS.INVALID_DATA)
     }
   }
 }

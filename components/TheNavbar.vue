@@ -31,7 +31,7 @@
                 size="small"
                 src="/images/veox-logo.png"
               />
-              VEOX
+              {{ $auth.user.username }}
             </div>
           </template>
           <el-menu-item index="logout">
@@ -51,10 +51,6 @@ import {
   navbarTextColor
 } from '@/assets/sass/_variables.scss'
 
-import { toastSuccess } from '@/use/notifications'
-
-import { SESSION } from '@/config/messages'
-
 export default {
   components: {
     BtnCollapseSidebar
@@ -71,9 +67,7 @@ export default {
   methods: {
     selectMenuItem (key) {
       if (key === 'logout') {
-        // this.$_authServiceSignOut()
-        this.$router.push('/login')
-        toastSuccess('', SESSION.ENDED)
+        this.$_authServiceSignOut()
       }
     }
   }

@@ -14,12 +14,19 @@
         :url="tileLayer.url"
       />
 
-      <l-draw />
-
-      <l-control />
+      <l-feature-group>
+        <l-draw @add-polygon="launchAddPolygonDialog" />
+      </l-feature-group>
 
     </l-map>
   </client-only>
+
+  <dialog-dynamic
+    ref="dialogDynamic"
+    :component="dialogDynamic[dialogDynamicMixin_componentSelected]"
+    @dialog-close="$_dialogDynamicMixin_dialogClose"
+  />
+
 </div>
 </template>
 
@@ -27,18 +34,23 @@
 import {
   LMap,
   LTileLayer,
-  LControl
+  LFeatureGroup
 } from 'vue2-leaflet'
 
+// import LDraw from '@/components/leaflet/LDraw'
 import LDraw from '@/components/leaflet/LDraw'
+
+import dialogDynamicMixin from "@/mixins/dialogDynamic.mixin"
 
 export default {
   components: {
     LMap,
     LTileLayer,
-    LControl,
+    LFeatureGroup,
     LDraw
   },
+
+  mixins: [dialogDynamicMixin],
 
   data () {
     return {
@@ -52,6 +64,13 @@ export default {
       },
       tileLayer: {
         url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+      },
+      // dialog
+      dialogDynamic: {
+        addPolygon: {
+          type: 'component',
+          path: 'polygons/AddPolygon'
+        }
       }
     }
   },
@@ -61,13 +80,18 @@ export default {
   },
 
   methods: {
-    async init () {
+    launchAddPolygonDialog (layer) {
+      this.$_dialogDynamicMixin_dialogOpen('addPolygon')
+      this.$refs.dialogDynamic.$setPropertiesToChild(layer)
+    },
+
+    init () {
       /**
        * resolving width map when resize
        */
       const $mapWrapper = document.querySelector('.map-wrapper')
 
-      await new Promise((res) => setTimeout(() => res($mapWrapper.style.width = '100%')))
+      setTimeout(() => $mapWrapper.style.width = '100%', 1)
     },
 
     logout () {

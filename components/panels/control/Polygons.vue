@@ -1,16 +1,44 @@
 <template>
-<h1 style="background-color: red">POLYGONS</h1>
+<card-polygon
+  v-if="polygons"
+  :polygons="polygons"
+  @view-polygon="viewPolygon"
+/>
 </template>
 
 <script>
+import CardPolygon from '@/components/card/CardPolygon'
+
 import mountableAsDynamicMixin from "@/mixins/mountableAsDynamic.mixin"
 
+import { mapState } from "vuex"
+
 export default {
+  components: {
+    CardPolygon,
+  },
+
   mixins: [mountableAsDynamicMixin],
 
   data: () => ({
     // defined if mountableAsDynamicMixin is included
-    dynamicTitle: 'POLYGONS title'
-  })
+    dynamicTitle: 'Polígonos'
+  }),
+
+  computed: {
+    ...mapState({
+      polygons: (state) => state.polygons.dataContext
+    })
+  },
+
+  created () {
+    this.$store.dispatch('polygons/getDataContext')
+  },
+
+  methods: {
+    viewPolygon (polygon) {
+      console.warn(polygon)
+    }
+  },
 }
 </script>

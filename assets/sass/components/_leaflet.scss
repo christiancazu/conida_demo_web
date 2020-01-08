@@ -2,12 +2,3 @@
   // defining map height
   height: calc(100vh - #{$--navbar-height});
 }
-
-.leaflet-popup-content {
-  @extend .mx-3;
-  @extend .my-4;
-
-  & > button {
-    @extend .ml-1;
-  }
-}

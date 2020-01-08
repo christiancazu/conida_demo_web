@@ -5,7 +5,8 @@
   :visible.sync="visible"
   append-to-body
   direction="rtl"
-  size="50%"
+  size="35%"
+  custom-class="drawer-right"
 >
 
   <keep-alive>

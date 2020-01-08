@@ -1,40 +1,51 @@
 <script>
+/**
+ * Listener on click buttons to bindPopup menu buttons
+ * accessing to vue.obserbable $ctxLDraw instance component
+ */
 document.addEventListener('click', e => {
-  console.log(e.target.tagName === 'BUTTON')
-  // eslint-disable-next-line no-undef
-  console.warn($nuxt.$refs)
+  if (e.target.tagName === 'BUTTON' && e.target.classList.contains('btn-leaflet-popup')) {
+    const action = e.target.getAttribute('data-action')
+    const id = Number(e.target.getAttribute('data-leaflet-id'))
+    // eslint-disable-next-line no-undef
+    $nuxt.$ctxLDraw.instance.onClickBtnPopupMenu(action, id)
+  }
 })
 
-import 'leaflet-draw'
+import { Control, Draw } from 'leaflet'
 
 import { findRealParent } from 'vue2-leaflet'
 
-import { FeatureGroup, Control, Draw } from 'leaflet'
+import 'leaflet-draw'
 
 export default {
   data () {
     return {
-      drawnItems: null,
-      drawControl: null,
-      objectMap: null,
-      ready: false,
-      parentContainer: null
+      LFeatureGroup: null,
+      LMap: null
     }
   },
 
   mounted () {
-    // this.XXX = 'gaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-    console.warn(this.$test)
-    this.parentContainer = findRealParent(this.$parent).mapObject
+    /**
+     * assigning context on Vue.observable to be access from outside Vue instance
+     *
+     * @instance $ctxLDraw.instance
+     */
+    this.$ctxLDraw.instance = this
 
-    this.drawnItems = new FeatureGroup()
+    // LFeatureGroup parent
+    this.LFeatureGroup = findRealParent(this.$parent).mapObject
+    // LMap parent
+    this.LMap = findRealParent(this.$parent.$parent).mapObject
 
-    this.parentContainer.addLayer(this.drawnItems)
+    this.LMap.addLayer(this.LFeatureGroup)
 
-    this.drawControl = new Control.Draw({
+    this.mapObject = new Control.Draw({
       edit: {
-        featureGroup: this.drawnItems
+        featureGroup: this.LFeatureGroup
       },
+      // draw settings
       draw: {
         marker: false,
         circle: false,
@@ -42,66 +53,113 @@ export default {
       }
     })
 
-    this.parentContainer.addControl(this.drawControl)
+    this.LMap.addControl(this.mapObject)
 
-    this.drawnItems.addTo(this.parentContainer)
+    this.LFeatureGroup.addTo(this.LMap)
 
-    this.parentContainer.on(Draw.Event.CREATED, (e) => {
-      const layer = e.layer
+    // Lmap events with leaflet-draw plugin
+    this.onDrawCREATED()
+    /**
+     * TODO: DRAW EVENTS
+     */
 
-      layer.bindPopup(this.popupTemplate())
-
-      console.warn('CREATED', e.target._leaflet_id)
-      console.warn(this.$refs)
-
-      this.drawnItems.addLayer(layer)
-    })
-
-    this.parentContainer.eachLayer((layer) => {
-      layer.on('contextmenu', (l) => {
-        console.warn(l.layer._leaflet_id)
-        this.drawnItems.removeLayer(l.layer)
-      })
-    })
-
-
-    this.parentContainer.on(Draw.Event.CREATED, (e) => {
-      this.$emit('draw-start', this.drawnItems, e)
-
-    })
     this.$nextTick(() => {
       this.$emit('ready', this.mapObject)
     })
   },
 
   methods: {
-    btnAction (e) {
-      console.log('BUTTON CLICKED', this.$el, this, e)
-      // console.log('event', e.target.getAttribute('data-foo'))
+    /**
+     * from popupMenu buttons, action & _leaflet_id
+     *
+     * @param {String, int}
+     */
+    onClickBtnPopupMenu (action, id) {
+      let currentPolygonLayer = null
+
+      this.LMap.eachLayer((layer) => {
+        if (layer._leaflet_id === id) currentPolygonLayer = layer
+      })
+
+      switch (action) {
+      case 'add':
+        this.onAddPolygon(currentPolygonLayer)
+        break
+      case 'edit':
+        this.onEditPolygon(currentPolygonLayer)
+        break
+      case 'delete':
+        this.onDeletePolygon(currentPolygonLayer)
+        break
+      }
     },
 
-    popupTemplate () {
+    /**
+     * Lmap @event CREATED
+     * @package leaflet-draw
+     */
+    onDrawCREATED () {
+      this.LMap.on(Draw.Event.CREATED, ({ layer }) => {
+        this.LFeatureGroup.addLayer(layer)
+        // bindPopup to layer created
+        layer.bindPopup(this.popupTemplate(layer._leaflet_id))
+      })
+    },
+
+    /**
+     * @emits add-polygon
+     * @param {Layer<Leaflet>}
+     */
+    onAddPolygon (layer) {
+      this.$emit('add-polygon', layer)
+    },
+
+    /**
+     * @emits edit-polygon
+     * @param {Layer<Leaflet>}
+     */
+    onEditPolygon (layer) {
+      layer.editing.enable()
+    },
+
+    /**
+     * @emits delete-polygon
+     * @param {Layer<Leaflet>}
+     */
+    onDeletePolygon (layer) {
+      this.LFeatureGroup.removeLayer(layer)
+    },
+
+    /**
+     * custom popup menu buttons template
+     *
+     * @param {id}
+     */
+    popupTemplate (id) {
       return `
         <button 
-          type="button"
-          class="el-button el-button--succes is-circle pa-0" 
-          style="width: 28px; height: 28px;"
+          data-tooltip="guardar"
+          data-leaflet-id="${id}"
+          data-action="add"
+          class="btn-leaflet-popup el-button el-button--success is-circle"
         >
-          <i class="el-icon-star-off" style="pointer-events: none"></i>
+          <i class="el-icon-circle-plus-outline"></i>
         </button>
         <button 
-          type="button"
-          class="el-button el-button--warning is-circle pa-0" 
-          style="width: 28px; height: 28px;"
+          data-tooltip="editar"
+          data-leaflet-id="${id}"
+          data-action="edit"
+          class="btn-leaflet-popup el-button el-button--warning is-circle"
         >
-          <i class="el-icon-star-off" style="pointer-events: none"></i>
+          <i class="el-icon-edit"></i>
         </button>
         <button 
-          type="button"
-          class="el-button el-button--danger is-circle pa-0" 
-          style="width: 28px; height: 28px;"
+          data-tooltip="eliminar"
+          data-leaflet-id="${id}"
+          data-action="delete"
+          class="btn-leaflet-popup el-button el-button--danger is-circle"
         >
-          <i class="el-icon-star-off" style="pointer-events: none"></i>
+          <i class="el-icon-delete"></i>
         </button>
       `
     }

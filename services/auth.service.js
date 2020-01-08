@@ -2,7 +2,7 @@
  ** NUXT AUTH SERVICES
  */
 
-import { toastSuccess } from '@/use/notifications'
+import { $_notify_success } from '@/use/notifications'
 
 import { AUTH_STRATEGY } from '@/config/constants'
 
@@ -19,7 +19,7 @@ export const signIn = async (app, data) => {
 
     await app.$auth.loginWith(AUTH_STRATEGY, { data })
 
-    toastSuccess('Bienvenido al geoportal', SESSION.STARTED)
+    $_notify_success('Bienvenido al geoportal', SESSION.STARTED)
   } catch (error) {
   }
   app.store.commit(`spinners/${DISABLE_SPINNER}`, 'processingForm')
@@ -31,7 +31,7 @@ export const signOut = async app => {
 
     await app.$auth.logout()
 
-    toastSuccess('', SESSION.ENDED)
+    $_notify_success('', SESSION.ENDED)
   } catch (error) {
     app.$auth.setToken(AUTH_STRATEGY, null)
   }
