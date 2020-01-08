@@ -6,7 +6,6 @@ import {
   setDataContext
 } from '@/use/store.mutations'
 
-
 const API = '$satelitalIndexAPI'
 
 export const state = () => ({

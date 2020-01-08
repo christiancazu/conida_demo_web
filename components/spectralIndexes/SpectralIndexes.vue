@@ -15,7 +15,14 @@
           style="width: 50px; height: 50px"
           :src="item.image"
           fit="cover"
-        />
+        >
+          <div
+            slot="error"
+            class="image-error-slot"
+          >
+            <i class="el-icon-picture-outline" />
+          </div>
+        </el-image>
         <div class="item-content">
           <h6 class="title">
             {{ item.name }}
@@ -56,7 +63,7 @@ export default {
   computed: {
     ...mapState({
       satelitalImages: (state) => state.satelitalImages.dataContext,
-      spectralIndexes: (state) => state.satelitalIndex.dataContext
+      spectralIndexes: (state) => state.satelitalIndexes.dataContext
     })
   },
 
@@ -76,11 +83,9 @@ export default {
       cb(results)
     },
     selectedImage (item) {
-      // console.log(item)
       const params = { satelitalImage: item.id }
-      this.$store.dispatch('satelitalIndex/getDataContext', params)
-
+      this.$store.dispatch('satelitalIndexes/getDataContext', params)
     }
-  },
+  }
 }
 </script>

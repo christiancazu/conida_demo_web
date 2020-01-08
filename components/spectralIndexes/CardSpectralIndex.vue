@@ -6,9 +6,17 @@
   <div class="content-spectral-index">
     <el-image
       style="width: 70px; height: 70px"
-      :src="spectralIndex.image"
+      :src="spectralIndex.image.result"
       fit="cover"
-    />
+      lazy
+    >
+      <div
+        slot="error"
+        class="image-error-slot"
+      >
+        <i class="el-icon-picture-outline" />
+      </div>
+    </el-image>
     <div class="detail">
       <h5 class="title">{{ spectralIndex.title }}</h5>
       <p>{{ spectralIndex.description }}</p>
@@ -40,7 +48,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 export default {
 
   props: {
@@ -51,14 +58,6 @@ export default {
   },
   data: () => ({
     isVisible: true
-  }),
-  computed: {
-    ...mapState({
-      satelitalIndexes: (state) => state.satelitalIndex.dataContext
-    })
-  },
-
-  methods: {
-  },
+  })
 }
 </script>
