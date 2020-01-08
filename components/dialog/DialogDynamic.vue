@@ -14,6 +14,7 @@
     :is="dynamicComponent"
     :properties="properties"
     @set-dynamic-title="setDynamicTitle"
+    @dialog-close="visible = false"
   />
 
 </el-dialog>

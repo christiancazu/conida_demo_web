@@ -17,7 +17,21 @@ body {
   @media (max-width: 992px) {
     width: calc(75% - 1rem);
   }
+
   @media (max-width: 768px) {
     width: calc(100% - 1rem);
   }
+}
+
+// form
+.form-btn-actions {
+  display: flex;
+  justify-content: center;
+  @extend .mt-5;
+}
+
+//drawer
+.drawer-right {
+  background-color: $--drawer-bg-color !important;
+  overflow-y: auto !important;
 }

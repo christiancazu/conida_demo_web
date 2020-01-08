@@ -47,12 +47,6 @@ export default {
     // scss variables
     navbarHeight,
     sidebarWidth
-  }),
-
-  methods: {
-    ga () {
-      console.warn('GAAAAAAAA')
-    }
-  }
+  })
 }
 </script>

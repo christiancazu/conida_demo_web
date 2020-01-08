@@ -75,27 +75,27 @@ export default {
      * @param {String, int}
      */
     onClickBtnPopupMenu (action, id) {
-      let currentLayer = null
+      let currentPolygonLayer = null
 
       this.LMap.eachLayer((layer) => {
-        if(layer._leaflet_id === id) currentLayer = layer
+        if (layer._leaflet_id === id) currentPolygonLayer = layer
       })
 
       switch (action) {
-      case 'register':
-        this.onRegisterLayer(currentLayer)
+      case 'add':
+        this.onAddPolygon(currentPolygonLayer)
         break
       case 'edit':
-        this.onEditLayer(currentLayer)
+        this.onEditPolygon(currentPolygonLayer)
         break
       case 'delete':
-        this.onDeleteLayer(currentLayer)
+        this.onDeletePolygon(currentPolygonLayer)
         break
       }
     },
 
     /**
-     * Lmap event @event CREATED
+     * Lmap @event CREATED
      * @package leaflet-draw
      */
     onDrawCREATED () {
@@ -107,26 +107,26 @@ export default {
     },
 
     /**
-     * @emits register-layer
+     * @emits add-polygon
      * @param {Layer<Leaflet>}
      */
-    onRegisterLayer (layer) {
-      this.$emit('selected-geojson', layer.toGeoJSON())
+    onAddPolygon (layer) {
+      this.$emit('add-polygon', layer)
     },
 
     /**
-     * @emits edit-layer
+     * @emits edit-polygon
      * @param {Layer<Leaflet>}
      */
-    onEditLayer (layer) {
+    onEditPolygon (layer) {
       layer.editing.enable()
     },
 
     /**
-     * @emits delete-layer
+     * @emits delete-polygon
      * @param {Layer<Leaflet>}
      */
-    onDeleteLayer (layer) {
+    onDeletePolygon (layer) {
       this.LFeatureGroup.removeLayer(layer)
     },
 
@@ -140,7 +140,7 @@ export default {
         <button 
           data-tooltip="guardar"
           data-leaflet-id="${id}"
-          data-action="register"
+          data-action="add"
           class="btn-leaflet-popup el-button el-button--success is-circle"
         >
           <i class="el-icon-circle-plus-outline"></i>

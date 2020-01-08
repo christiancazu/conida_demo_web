@@ -6,6 +6,7 @@
   append-to-body
   direction="rtl"
   size="35%"
+  custom-class="drawer-right"
 >
 
   <keep-alive>

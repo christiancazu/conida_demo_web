@@ -48,6 +48,10 @@ export default {
 
     setDrawerVisible () {
       this.visible = true
+    },
+
+    setDialogNotVisible () {
+      this.visible = false
     }
   }
 }

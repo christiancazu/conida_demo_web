@@ -15,7 +15,7 @@
       />
 
       <l-feature-group>
-        <l-draw @selected-geojson="selectedGeoJSON" />
+        <l-draw @add-polygon="launchAddPolygonDialog" />
       </l-feature-group>
 
     </l-map>
@@ -67,9 +67,9 @@ export default {
       },
       // dialog
       dialogDynamic: {
-        geoJson: {
+        addPolygon: {
           type: 'component',
-          path: 'LayerDetails'
+          path: 'polygons/AddPolygon'
         }
       }
     }
@@ -80,9 +80,9 @@ export default {
   },
 
   methods: {
-    selectedGeoJSON (geoJSON) {
-      this.$_dialogDynamicMixin_dialogOpen('geoJson')
-      this.$refs.dialogDynamic.$setPropertiesToChild(geoJSON)
+    launchAddPolygonDialog (layer) {
+      this.$_dialogDynamicMixin_dialogOpen('addPolygon')
+      this.$refs.dialogDynamic.$setPropertiesToChild(layer)
     },
 
     init () {
