@@ -47,6 +47,9 @@ h6,
   font-family: $font-header;
   color: $shade-dark !important;
 }
+h6,.h6 {
+  font-weight: 600 !important;
+}
 p,
 .p, input {
   margin: 0;

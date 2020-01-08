@@ -5,25 +5,35 @@
     v-model="searchImage"
     :fetch-suggestions="querySearch"
     placeholder="Selecciona una imagen del proyecto"
+    value-key="name"
     clearable
     @select="selectedImage"
   >
     <template slot-scope="{ item }">
       <div class="scope-item">
-        <el-avatar
-          class="item-image"
-          shape="square"
-          size="medium"
-          src="https://apps.sentinel-hub.com/sentinel-playground/previews/b0eec84c-1-NATURAL-COLOR.jpeg"
+        <el-image
+          style="width: 50px; height: 50px"
+          :src="item.image"
+          fit="cover"
         />
-        <span class="item-content">
-          {{ item.value }}
-        </span>
+        <div class="item-content">
+          <h6 class="title">
+            {{ item.name }}
+          </h6>
+          <p>
+            <i class="el-icon-date" /> {{ item.date }}
+          </p>
+        </div>
       </div>
     </template>
   </el-autocomplete>
 
-  <card-spectral-index />
+  <template v-for="(item, i) in spectralIndexes">
+    <card-spectral-index
+      :key="i"
+      :spectral-index="item"
+    />
+  </template>
 
 </el-main>
 </template>
@@ -31,9 +41,9 @@
 <script>
 import mountableAsDynamicMixin from "@/mixins/mountableAsDynamic.mixin"
 import CardSpectralIndex from '@/components/spectralIndexes/CardSpectralIndex.vue'
-
+import { mapState } from "vuex"
 export default {
-  components:{
+  components: {
     CardSpectralIndex
   },
   mixins: [mountableAsDynamicMixin],
@@ -42,30 +52,34 @@ export default {
     // defined if mountableAsDynamicMixin is included
     dynamicTitle: 'Indices espectrales',
     searchImage: '',
-    images: [
-      { "value": "vue", "link": "https://github.com/vuejs/vue" },
-      { "value": "element", "link": "https://github.com/ElemeFE/element" },
-      { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
-      { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-      { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-      { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-      { "value": "babel", "link": "https://github.com/babel/babel" }
-    ]
   }),
+  computed: {
+    ...mapState({
+      satelitalImages: (state) => state.satelitalImages.dataContext,
+      spectralIndexes: (state) => state.satelitalIndex.dataContext
+    })
+  },
 
+  created () {
+    const params = { project: 3 }
+    this.$store.dispatch('satelitalImages/getDataContext', params)
+  },
   methods: {
     querySearch (string, cb) {
-      let results = this.images
+      let results = this.satelitalImages
       if (string) {
         const stringToLowerCase = string.toLowerCase()
-        results = this.images.filter(item => {
-          return item.value.toLowerCase().includes(stringToLowerCase)
+        results = this.satelitalImages.filter(item => {
+          return item.name.toLowerCase().includes(stringToLowerCase)
         })
       }
       cb(results)
     },
     selectedImage (item) {
-      console.log(item)
+      // console.log(item)
+      const params = { satelitalImage: item.id }
+      this.$store.dispatch('satelitalIndex/getDataContext', params)
+
     }
   },
 }

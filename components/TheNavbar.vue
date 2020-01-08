@@ -31,7 +31,7 @@
                 size="small"
                 src="/images/veox-logo.png"
               />
-              {{ $auth.user.username }}
+              {{ $auth.user? $auth.user.username : '' }}
             </div>
           </template>
           <el-menu-item index="logout">

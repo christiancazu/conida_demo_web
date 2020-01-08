@@ -8,4 +8,6 @@ export default $axios => resource => ({
   // delete: slug => $axios.$delete(`${resource}/${slug}/`),
 
   // getById: slug => $axios.$get(`${resource}/${slug}/`)
+
+  getSatelitalImages: params => $axios.$get(`${resource}/project/`, { params })
 })

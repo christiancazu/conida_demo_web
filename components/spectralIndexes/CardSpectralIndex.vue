@@ -6,12 +6,12 @@
   <div class="content-spectral-index">
     <el-image
       style="width: 70px; height: 70px"
-      src="https://apps.sentinel-hub.com/sentinel-playground/previews/b0eec84c-1-NATURAL-COLOR.jpeg"
+      :src="spectralIndex.image"
       fit="cover"
     />
     <div class="detail">
-      <h5 class="title">INDICE NDVI</h5>
-      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+      <h5 class="title">{{ spectralIndex.title }}</h5>
+      <p>{{ spectralIndex.description }}</p>
       <div class="actions">
         <el-button
           type="text"
@@ -40,12 +40,23 @@
 </template>
 
 <script>
-
+import { mapState } from 'vuex'
 export default {
 
+  props: {
+    spectralIndex: {
+      type: Object,
+      default: null
+    }
+  },
   data: () => ({
     isVisible: true
   }),
+  computed: {
+    ...mapState({
+      satelitalIndexes: (state) => state.satelitalIndex.dataContext
+    })
+  },
 
   methods: {
   },

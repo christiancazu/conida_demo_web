@@ -37,10 +37,22 @@
 .scope-item {
   display: flex;
   align-items: center;
+  width: 100%;
+  outline: red;
+  img {
+    border-radius: 8% !important;
+  }
   .item-image {
     margin: 0.25rem 0;
   }
   .item-content {
     padding-left: 0.8rem;
+    width: calc(100% - 70px);
+
+    .title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }

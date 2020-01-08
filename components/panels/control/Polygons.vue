@@ -32,7 +32,8 @@ export default {
   },
 
   created () {
-    this.$store.dispatch('polygons/getDataContext')
+    const params = { project: 1 }
+    this.$store.dispatch('polygons/getDataContext', params)
   },
 
   methods: {
