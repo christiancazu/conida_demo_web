@@ -9,11 +9,18 @@
       :center="map.latLng"
       :zoom="map.zoom"
     >
-
+      <!--
       <l-tile-layer
         :url="tileLayer.url"
-      />
-
+        @ready="tile1 = $event"
+      /> -->
+      <l-control>
+        <l-side-by-side
+          v-if="ready"
+          :tile1="tile1"
+          :tile2="tile2"
+        />
+      </l-control>
       <l-feature-group>
         <l-draw @add-polygon="launchAddPolygonDialog" />
       </l-feature-group>
@@ -33,27 +40,32 @@
 <script>
 import {
   LMap,
-  LTileLayer,
+  // LTileLayer,
+  LControl,
   LFeatureGroup
 } from 'vue2-leaflet'
 
 // import LDraw from '@/components/leaflet/LDraw'
 import LDraw from '@/components/leaflet/LDraw'
+import LSideBySide from '@/components/leaflet/LSideBySide'
 
 import dialogDynamicMixin from "@/mixins/dialogDynamic.mixin"
 
 export default {
   components: {
     LMap,
-    LTileLayer,
+    LControl,
+    // LTileLayer,
     LFeatureGroup,
-    LDraw
+    LDraw,
+    LSideBySide
   },
 
   mixins: [dialogDynamicMixin],
 
   data () {
     return {
+      ready: false,
       // leaflet
       map: {
         latLng: [
@@ -71,12 +83,19 @@ export default {
           type: 'component',
           path: 'polygons/AddPolygon'
         }
-      }
+      },
+
+      tile1: {},
+      tile2: {}
     }
   },
 
   mounted () {
-    this.init()
+    setTimeout(() => {
+      this.ready = true
+    }, 3000)
+
+    // this.init()
   },
 
   methods: {

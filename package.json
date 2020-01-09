@@ -25,6 +25,7 @@
     "element-ui": "^2.13.0",
     "leaflet": "^1.6.0",
     "leaflet-draw": "^1.0.4",
+    "leaflet-side-by-side": "^2.1.0",
     "nuxt": "^2.11.0",
     "vue2-leaflet": "^2.4.2"
   },

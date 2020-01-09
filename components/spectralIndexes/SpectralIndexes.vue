@@ -7,6 +7,7 @@
     placeholder="Selecciona una imagen del proyecto"
     value-key="name"
     clearable
+    :disabled="$store.state.spinners.processingForm"
     @select="selectedImage"
   >
     <template slot-scope="{ item }">
