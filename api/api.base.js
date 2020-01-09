@@ -5,7 +5,7 @@ export default $axios => resource => ({
 
   // update: data => $axios.$put(`${resource}/${data.get('id')}/`, data),
 
-  // delete: slug => $axios.$delete(`${resource}/${slug}/`),
+  delete: id => $axios.$delete(`${resource}/${id}/`),
 
   // getById: slug => $axios.$get(`${resource}/${slug}/`)
 })

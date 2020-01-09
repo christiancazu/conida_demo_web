@@ -9,7 +9,8 @@ import {
 
 import {
   getDataContext,
-  create
+  create,
+  deleteItemContext
 } from '@/use/store.actions'
 
 const API = '$polygonAPI'
@@ -21,7 +22,9 @@ export const state = () => ({
 export const actions = {
   getDataContext: getDataContext(API),
 
-  create: create(API)
+  create: create(API),
+
+  deleteItemContext: deleteItemContext(API)
 }
 
 export const mutations = {

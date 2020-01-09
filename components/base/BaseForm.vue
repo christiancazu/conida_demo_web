@@ -42,11 +42,6 @@ import {
   ERRORS
 } from '@/config/messages'
 
-import {
-  ENABLE_SPINNER,
-  DISABLE_SPINNER
-} from '@/store/mutations.types'
-
 export default {
   methods: {
     async submitForm () {
@@ -55,34 +50,41 @@ export default {
       await this.$refs.form.validate(result => isFormValid = result)
 
       if (isFormValid) {
-        this.$store.commit(`spinners/${ENABLE_SPINNER}`, 'processingForm')
-
         const formData = $_use_objectToFormData(this.$parent.form)
 
         // parent submit context
-        const { storeName, storeAction, notifyType } = this.$parent.submit
+        const { storeAction, notifyType } = this.$parent.submit
 
         // used when need to apply custom functionality/fix on formData before to be sends
         this.$emit('apply-before-submit-form', formData)
+
         try {
-          await this.$store.dispatch(`${storeName}/${storeAction}`, formData)
+          let submmitedForm = false
 
-          if (storeAction === 'createItemContext') this.resetForm()
+          await this.$_requestService(this.submitAction(formData).then(() => submmitedForm = true), 'processingForm')
 
-          $_notify_success(SUCCESS[notifyType])
+          if (submmitedForm) {
+            $_notify_success(SUCCESS[notifyType])
 
-          //  await this.getDataContext()
-
-          // used when need to apply custom functionality/fix on formData after to be sends
-          this.$emit('apply-after-submit-form')
+            if (storeAction === 'create') this.resetForm()
+            this.$emit('apply-after-submit-form')
+          }
+        } catch (error) {
         }
-        catch (e) {
-        }
-        this.$store.commit(`spinners/${DISABLE_SPINNER}`, 'processingForm')
 
       } else {
         $_notify_error(ERRORS.INVALID_DATA)
       }
+    },
+
+    async submitAction (formData) {
+      const { storeName, storeAction } = this.$parent.submit
+
+      await this.$store.dispatch(`${storeName}/${storeAction}`, formData)
+    },
+
+    resetForm () {
+      this.$refs.form.resetFields()
     }
   }
 }

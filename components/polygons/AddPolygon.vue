@@ -1,19 +1,17 @@
 <template>
-<div>
-  <base-form @apply-after-submit-form="applyAfterSubmitForm">
-    <el-form-item
-      label="Nombre"
-      prop="name"
-    >
-      <el-input
-        v-model="form.name"
-        placeholder="nombre del polígono"
-        auto-complete="off"
-        clearable
-      />
-    </el-form-item>
-  </base-form>
-</div>
+<base-form @apply-after-submit-form="applyAfterSubmitForm">
+  <el-form-item
+    label="Nombre"
+    prop="name"
+  >
+    <el-input
+      v-model="form.name"
+      placeholder="nombre del polígono"
+      auto-complete="off"
+      clearable
+    />
+  </el-form-item>
+</base-form>
 </template>
 
 <script>
@@ -22,8 +20,6 @@ import BaseForm from "@/components/base/BaseForm"
 import mountableAsDynamicMixin from '@/mixins/mountableAsDynamic.mixin'
 
 import { required } from "@/config/form.rules"
-
-import { ADD_ITEM_CONTEXT } from '@/store/mutations.types'
 
 export default {
   components: {
@@ -67,14 +63,12 @@ export default {
     },
 
     /**
-     * setting current polygon layer as dataContext state of polygons store
+     * removing polygon from LDraw instance
+     * closing dialog
      */
     applyAfterSubmitForm () {
-      this.$store.commit(`${this.submit.storeName}/${ADD_ITEM_CONTEXT}`, {
-        name: this.form.name,
-        geometry: this.properties.toGeoJSON(),
-        description: this.form.description
-      })
+      this.$LDraw.instance.onDeletePolygon(this.properties)
+      this.$_mountableAsDynamic_closeDialog()
     }
   }
 }

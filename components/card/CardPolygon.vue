@@ -9,19 +9,41 @@
       {{ polygon.name }}
     </div>
     <div class="el-card__body__actions">
-      <el-button
-        type="primary"
-        size="mini"
-        icon="el-icon-view"
-        circle
-        @click="$emit('view-polygon', polygon)"
-      />
-      <el-button
-        type="danger"
-        size="mini"
-        icon="el-icon-delete"
-        circle
-      />
+      <el-tooltip
+        content="Ver"
+        class="item" effect="dark" placement="top"
+      >
+        <el-button
+          type="primary"
+          size="mini"
+          icon="el-icon-view"
+          circle
+          @click="$emit('view-polygon', polygon)"
+        />
+      </el-tooltip>
+
+      <el-tooltip
+        content="Eliminar"
+        class="item" effect="dark" placement="top"
+      >
+        <el-popconfirm
+          confirm-button-text="Si"
+          cancel-button-text=" No "
+          icon="el-icon-info"
+          icon-color="red"
+          title="Está seguro de eliminar el polígono?"
+          @onConfirm="$emit('delete-polygon', polygon)"
+        >
+
+          <el-button
+            slot="reference"
+            type="danger"
+            size="mini"
+            icon="el-icon-delete"
+            circle
+          />
+        </el-popconfirm>
+      </el-tooltip>
     </div>
   </el-card>
 </section>
@@ -34,6 +56,12 @@ export default {
       type: Array,
       default: () => []
     },
-  }
+  },
+
+  methods: {
+    handleConfirm (e) {
+      console.warn('handleconfirm', e)
+    },
+  },
 }
 </script>

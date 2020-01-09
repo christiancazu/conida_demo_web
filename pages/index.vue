@@ -8,6 +8,7 @@
       ref="map"
       :center="map.latLng"
       :zoom="map.zoom"
+      @ready="lMapReady"
     >
 
       <l-tile-layer
@@ -83,6 +84,15 @@ export default {
     launchAddPolygonDialog (layer) {
       this.$_dialogDynamicMixin_dialogOpen('addPolygon')
       this.$refs.dialogDynamic.$setPropertiesToChild(layer)
+    },
+
+    /**
+     * assigning REFERENCE on Vue.observable to be access from Vue instance
+     *
+     * @instance $LMap.instance
+     */
+    lMapReady (mapObject) {
+      this.$LMap.instance = mapObject
     },
 
     init () {

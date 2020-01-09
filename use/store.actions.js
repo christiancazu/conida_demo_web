@@ -11,3 +11,7 @@ export const getDataContext = api => async function ({ commit }) {
 export const create = api => async function ({}, form) {
   await this[api].create(form)
 }
+
+export const deleteItemContext = api => async function ({}, id) {
+  await this[api].delete(id)
+}

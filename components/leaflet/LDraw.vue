@@ -1,14 +1,14 @@
 <script>
 /**
  * Listener on click buttons to bindPopup menu buttons
- * accessing to vue.obserbable $ctxLDraw instance component
+ * accessing to vue.obserbable $LDraw instance component
  */
 document.addEventListener('click', e => {
   if (e.target.tagName === 'BUTTON' && e.target.classList.contains('btn-leaflet-popup')) {
     const action = e.target.getAttribute('data-action')
     const id = Number(e.target.getAttribute('data-leaflet-id'))
     // eslint-disable-next-line no-undef
-    $nuxt.$ctxLDraw.instance.onClickBtnPopupMenu(action, id)
+    $nuxt.$LDraw.instance.onClickBtnPopupMenu(action, id)
   }
 })
 
@@ -30,9 +30,9 @@ export default {
     /**
      * assigning context on Vue.observable to be access from outside Vue instance
      *
-     * @instance $ctxLDraw.instance
+     * @instance $LDraw.instance
      */
-    this.$ctxLDraw.instance = this
+    this.$LDraw.instance = this
 
     // LFeatureGroup parent
     this.LFeatureGroup = findRealParent(this.$parent).mapObject
@@ -77,7 +77,7 @@ export default {
     onClickBtnPopupMenu (action, id) {
       let currentPolygonLayer = null
 
-      this.LMap.eachLayer((layer) => {
+      this.LMap.eachLayer(layer => {
         if (layer._leaflet_id === id) currentPolygonLayer = layer
       })
 
@@ -99,7 +99,9 @@ export default {
      * @package leaflet-draw
      */
     onDrawCREATED () {
-      this.LMap.on(Draw.Event.CREATED, ({ layer }) => {
+      this.LMap.on(Draw.Event.CREATED, (e) => {
+        const layer = e.layer
+        console.warn('layer', layer)
         this.LFeatureGroup.addLayer(layer)
         // bindPopup to layer created
         layer.bindPopup(this.popupTemplate(layer._leaflet_id))
@@ -127,6 +129,7 @@ export default {
      * @param {Layer<Leaflet>}
      */
     onDeletePolygon (layer) {
+      console.warn('layerToDelete', layer)
       this.LFeatureGroup.removeLayer(layer)
     },
 
