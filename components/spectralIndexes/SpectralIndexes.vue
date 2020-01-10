@@ -1,6 +1,5 @@
 <template>
 <el-main>
-  <!-- selected image -->
   <el-autocomplete
     v-model="searchImage"
     :fetch-suggestions="querySearch"
@@ -49,7 +48,8 @@
 <script>
 import mountableAsDynamicMixin from "@/mixins/mountableAsDynamic.mixin"
 import CardSpectralIndex from '@/components/spectralIndexes/CardSpectralIndex.vue'
-import { mapState } from "vuex"
+import { mapState, mapGetters } from "vuex"
+import {SET_DATA_CONTEXT} from '@/store/mutations.types'
 export default {
   components: {
     CardSpectralIndex
@@ -64,7 +64,10 @@ export default {
   computed: {
     ...mapState({
       satelitalImages: (state) => state.satelitalImages.dataContext,
-      spectralIndexes: (state) => state.satelitalIndexes.dataContext
+      // spectralIndexes: (state) => state.satelitalIndexes.dataContext
+    }),
+    ...mapGetters({
+      spectralIndexes: 'satelitalIndexes/satelitalIndexes'
     })
   },
 
@@ -85,7 +88,9 @@ export default {
     },
     selectedImage (item) {
       const params = { satelitalImage: item.id }
+      this.$store.commit(`satelitalIndexes/${SET_DATA_CONTEXT}`, [])
       this.$store.dispatch('satelitalIndexes/getDataContext', params)
+      this.searchImage = ''
     }
   }
 }

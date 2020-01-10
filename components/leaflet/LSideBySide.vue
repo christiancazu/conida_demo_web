@@ -15,7 +15,6 @@
     :key="i"
     :base-url="item.baseUrl"
     :layers="item.layer"
-    :visible="item.visible"
     name="xxx"
     layer-type="overlay"
     :transparent="true"
@@ -31,9 +30,7 @@
 import SideBySide from 'leaflet-side-by-side'
 import { findRealParent, LWMSTileLayer } from "vue2-leaflet"
 import { geoJSON } from 'leaflet'
-import { SET_SELECTED_SATELITAL_INDEX } from '@/store/mutations.types'
-
-
+import { SET_LAYER_SATELITAL_INDEX } from '@/store/mutations.types'
 import { mapState } from 'vuex'
 
 export default {
@@ -51,24 +48,18 @@ export default {
 
   computed: {
     ...mapState({
-      satelitalIndex: (state) => state.satelitalIndexes.selectedSatelitalIndex,
+      sideBySideVisible: (state) => state.satelitalIndexes.sideBySideVisible,
+      satelitalIndex: (state) => state.satelitalIndexes.layerSatelitalIndex
     }),
-    isVisible: function () {
-      return this.satelitalIndex[1] ? this.satelitalIndex[1].visible : false
-    },
     geometry: function () {
       return this.satelitalIndex[0] ? this.satelitalIndex[0].geometry : null
     }
   },
 
   watch: {
-    isVisible: function (val) {
+    sideBySideVisible: function (val) {
       if (!val) {
-        this.LMap.removeControl(this.LSideBySide)
-        this.$store.commit(`satelitalIndexes/${SET_SELECTED_SATELITAL_INDEX}`, [])
-        this.LSideBySide = null
-        this.layerBase = null
-        this.layerResult = null
+        this.removeSideBySide()
       }
     }
   },
@@ -81,8 +72,7 @@ export default {
     test (layer, item) {
       let typeIndex = item.typeImage
       this[typeIndex] = layer
-      this.addSideBySide()
-
+      this.addS
     },
     addSideBySide () {
       if (this.layerBase && this.layerResult) {
@@ -90,13 +80,18 @@ export default {
           this.LSideBySide = SideBySide(this.layerBase, this.layerResult)
           this.LSideBySide.addTo(this.LMap)
           let geometry = JSON.parse(this.geometry)
-          // let gaaaa = geoJSON(geometry)
           this.LMap.fitBounds(geoJSON(geometry).getBounds())
         })
       }
+    },
+    removeSideBySide () {
+      this.LMap.removeControl(this.LSideBySide)
+      this.$store.commit(`satelitalIndexes/${SET_LAYER_SATELITAL_INDEX}`, [])
+      this.LSideBySide = null
+      this.layerBase = null
+      this.layerResult = null
     }
   },
-
   render: () => ({})
 }
 </script>
