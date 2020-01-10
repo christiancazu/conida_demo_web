@@ -1,78 +1,100 @@
+<template>
+<div>
+  <!-- <l-w-m-s-tile-layer
+    base-url="http://35.238.229.238:8080/geoserver/conida/wms"
+    layers="conida:RGB_S2A_MSIL2A_20191227T151701_N0213_R125_T18LWM_20191227T185645"
+    :visible="true"
+    name="xxx"
+    layer-type="overlay"
+    :transparent="true"
+    format="image/png"
+    @ready="layerTest = $event"
+  /> -->
+  <l-w-m-s-tile-layer
+    v-for="(item, i) in satelitalIndex"
+    :key="i"
+    :base-url="item.baseUrl"
+    :layers="item.layer"
+    :visible="item.visible"
+    name="xxx"
+    layer-type="overlay"
+    :transparent="true"
+    format="image/png"
+    :detect-retina="true"
+    @ready="$event => test($event, item)"
+  />
+
+</div>
+
+</template>
 <script>
-// import * as sideBySide from 'leaflet-side-by-side'
-var sideBySide = require('leaflet-side-by-side')
-import L from 'leaflet'
-// const sideBySide = require('leaflet-side-by-side')
-import { findRealParent } from "vue2-leaflet"
+import SideBySide from 'leaflet-side-by-side'
+import { findRealParent, LWMSTileLayer } from "vue2-leaflet"
+import { geoJSON } from 'leaflet'
+import { SET_SELECTED_SATELITAL_INDEX } from '@/store/mutations.types'
+
+
+import { mapState } from 'vuex'
 
 export default {
-  props: {
-    //tile1: { type: Object, default: () => ({}) },
-    //tile2: { type: Object, default: () => ({}) }
+  components: {
+    LWMSTileLayer
   },
   data () {
     return {
-      LMap: {}
+      LMap: {},
+      layerBase: null,
+      layerResult: null,
+      LSideBySide: null
     }
   },
+
+  computed: {
+    ...mapState({
+      satelitalIndex: (state) => state.satelitalIndexes.selectedSatelitalIndex,
+    }),
+    isVisible: function () {
+      return this.satelitalIndex[1] ? this.satelitalIndex[1].visible : false
+    },
+    geometry: function () {
+      return this.satelitalIndex[0] ? this.satelitalIndex[0].geometry : null
+    }
+  },
+
+  watch: {
+    isVisible: function (val) {
+      if (!val) {
+        this.LMap.removeControl(this.LSideBySide)
+        this.$store.commit(`satelitalIndexes/${SET_SELECTED_SATELITAL_INDEX}`, [])
+        this.LSideBySide = null
+        this.layerBase = null
+        this.layerResult = null
+      }
+    }
+  },
+
   mounted () {
     this.LMap = findRealParent(this.$parent).mapObject
-    let leftLayer = L.tileLayer.wms("http://35.238.229.238:8080/geoserver/conida/wms", {
-      layers: "conida:RGB_S2A_MSIL2A_20191227T151701_N0213_R125_T18LWM_20191227T185645",
-      format: 'image/png',
-      transparent: true,
-    })
-    this.LMap.addLayer(leftLayer)
-    let rightLayer = L.tileLayer.wms("http://35.238.229.238:8080/geoserver/conida/wms", {
-      layers: "conida:NDVI_S2A_MSIL2A_20191227T151701_N0213_R125_T18LWM_20191227T185645",
-      format: 'image/png',
-      transparent: true,
-    })
-    this.LMap.addLayer(rightLayer)
-    //leafletControl.addTo(this.LMap)
+  },
 
-    //console.log(L.control({}))
-    let leafletControl = sideBySide(leftLayer, rightLayer)
+  methods: {
+    test (layer, item) {
+      let typeIndex = item.typeImage
+      this[typeIndex] = layer
+      this.addSideBySide()
 
-    console.log(leafletControl)
-    //console.log(leftLayer._leaflet_id)
-    //console.log(rightLayer._leaflet_id)
-    //console.log(leafletControl._leaflet_id)
-
-
-
-
-    /**
-    console.log(this.LMap)
-    setTimeout(() => {
-
-      //console.warn(this.LMap)
-
-      //console.log(this.tile1, 'tile1')
-      //console.log(this.tile2, 'tile2')
-
-      let result = tileLayer
-        .wms('http://35.238.229.238:8080/geoserver/conida/wms', {
-          format: 'image/png',
-          transparent: true,
-          layers: 'conida:VEGETATION_S2A_MSIL2A_20191227T151701_N0213_R125_T18LWM_20191227T185645'
-        }).addTo(this.LMap)
-      console.log(result._leflet_id)
-
-      let base = tileLayer
-        .wms('http://35.238.229.238:8080/geoserver/conida/wms', {
-          format: 'image/png',
-          transparent: true,
-          layers: 'conida:S2A_MSIL2A_20191227T151701_N0213_R125_T18LWM_20191227T185645'
-        }).addTo(this.LMap)
-      console.log(base._leflet_id)
-
-      //const sbs = sideBySide(result, base).addTo(this.LMap)
-
-      //console.info('sbs', sbs)
-
-    }, 3000)
-*/
+    },
+    addSideBySide () {
+      if (this.layerBase && this.layerResult) {
+        this.$nextTick(() => {
+          this.LSideBySide = SideBySide(this.layerBase, this.layerResult)
+          this.LSideBySide.addTo(this.LMap)
+          let geometry = JSON.parse(this.geometry)
+          // let gaaaa = geoJSON(geometry)
+          this.LMap.fitBounds(geoJSON(geometry).getBounds())
+        })
+      }
+    }
   },
 
   render: () => ({})

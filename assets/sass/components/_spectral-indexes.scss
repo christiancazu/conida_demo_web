@@ -33,6 +33,16 @@
       }
     }
   }
+  .is-visible {
+   visibility: hidden;
+  }
+  &:hover {
+    cursor: pointer;
+    .is-visible {
+      visibility: visible;
+      transition: .3s ease-in-out;
+    }
+  }
 }
 .scope-item {
   display: flex;

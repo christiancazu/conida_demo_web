@@ -14,13 +14,7 @@
         :url="tileLayer.url"
         @ready="tile1 = $event"
       />
-      <!-- <l-control> -->
-      <l-side-by-side
-        v-if="ready"
-        :tile1="tile1"
-        :tile2="tile2"
-      />
-      <!-- </l-control> -->
+      <l-side-by-side />
       <l-feature-group>
         <l-draw @add-polygon="launchAddPolygonDialog" />
       </l-feature-group>
@@ -54,7 +48,6 @@ import dialogDynamicMixin from "@/mixins/dialogDynamic.mixin"
 export default {
   components: {
     LMap,
-    // LControl,
     LTileLayer,
     LFeatureGroup,
     LDraw,
@@ -91,11 +84,7 @@ export default {
   },
 
   mounted () {
-    setTimeout(() => {
-      this.ready = true
-    }, 3000)
-
-    // this.init()
+    this.init()
   },
 
   methods: {
