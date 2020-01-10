@@ -14,11 +14,13 @@ Icon.Default.mergeOptions({
  * injecting observable variable to get context of LDraw component
  * to get access to his methods
  */
-const LDraw = Vue.observable({instance: null})
-const LMap = Vue.observable({instance: null})
+const L = Vue.observable({
+  DRAW: null,
+  map: null,
+  tempLayers: null,
+  projectLayers: null
+})
 
 export default ({}, inject) => {
-  inject('LDraw', LDraw)
-
-  inject('LMap', LMap)
+  inject('L', L)
 }

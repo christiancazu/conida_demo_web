@@ -8,7 +8,6 @@
       ref="map"
       :center="map.latLng"
       :zoom="map.zoom"
-      @ready="lMapReady"
     >
 
       <l-tile-layer
@@ -18,6 +17,8 @@
       <l-feature-group>
         <l-draw @add-polygon="launchAddPolygonDialog" />
       </l-feature-group>
+
+      <l-project-layers />
 
     </l-map>
   </client-only>
@@ -38,17 +39,19 @@ import {
   LFeatureGroup
 } from 'vue2-leaflet'
 
-// import LDraw from '@/components/leaflet/LDraw'
 import LDraw from '@/components/leaflet/LDraw'
+import LProjectLayers from '@/components/leaflet/LProjectLayers'
 
-import dialogDynamicMixin from "@/mixins/dialogDynamic.mixin"
+import dialogDynamicMixin from '@/mixins/dialogDynamic.mixin'
+import { authService } from '@/services/services.types'
 
 export default {
   components: {
     LMap,
     LTileLayer,
     LFeatureGroup,
-    LDraw
+    LDraw,
+    LProjectLayers
   },
 
   mixins: [dialogDynamicMixin],
@@ -58,8 +61,7 @@ export default {
       // leaflet
       map: {
         latLng: [
-          -9.190481498666669,
-          -74.61914062500001
+          -9.190481498666669, -74.61914062500001
         ],
         zoom: 4
       },
@@ -86,15 +88,6 @@ export default {
       this.$refs.dialogDynamic.$setPropertiesToChild(layer)
     },
 
-    /**
-     * assigning REFERENCE on Vue.observable to be access from Vue instance
-     *
-     * @instance $LMap.instance
-     */
-    lMapReady (mapObject) {
-      this.$LMap.instance = mapObject
-    },
-
     init () {
       /**
        * resolving width map when resize
@@ -105,7 +98,7 @@ export default {
     },
 
     logout () {
-      this.$_authServiceSignOut()
+      this.$_auth_service(authService.SIGN_OUT)
     }
   }
 }

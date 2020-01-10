@@ -44,7 +44,7 @@ export default {
     '@/plugins/axios',
     '@/plugins/services',
     '@/plugins/api',
-    { src: '@/plugins/leaflet', ssr: false }
+    { src: '@/plugins/leafLet', ssr: false }
   ],
   /*
    ** Nuxt.js modules

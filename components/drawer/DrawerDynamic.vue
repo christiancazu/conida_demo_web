@@ -4,7 +4,7 @@
   :title="title"
   :visible.sync="visible"
   append-to-body
-  direction="rtl"
+  direction="ltr"
   size="35%"
   custom-class="drawer-right"
 >

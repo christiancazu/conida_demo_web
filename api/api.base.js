@@ -1,5 +1,5 @@
 export default $axios => resource => ({
-  get: params => $axios.$get(`${resource}/`, { params }),
+  get: params => $axios.$get(`${resource}/?project_id=3`, { params }),
 
   create: data => $axios.$post(`${resource}/`, data),
 

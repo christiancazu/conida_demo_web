@@ -50,6 +50,7 @@ import {
   navbarBgColor,
   navbarTextColor
 } from '@/assets/sass/_variables.scss'
+import { authService } from '@/services/services.types'
 
 export default {
   components: {
@@ -67,7 +68,7 @@ export default {
   methods: {
     selectMenuItem (key) {
       if (key === 'logout') {
-        this.$_authServiceSignOut()
+        this.$_auth_service(authService.SIGN_OUT)
       }
     }
   }

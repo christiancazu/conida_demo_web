@@ -8,7 +8,7 @@ document.addEventListener('click', e => {
     const action = e.target.getAttribute('data-action')
     const id = Number(e.target.getAttribute('data-leaflet-id'))
     // eslint-disable-next-line no-undef
-    $nuxt.$LDraw.instance.onClickBtnPopupMenu(action, id)
+    $nuxt.$L.DRAW.onClickBtnPopupMenu(action, id)
   }
 })
 
@@ -19,31 +19,24 @@ import { findRealParent } from 'vue2-leaflet'
 import 'leaflet-draw'
 
 export default {
-  data () {
-    return {
-      LFeatureGroup: null,
-      LMap: null
-    }
-  },
-
   mounted () {
     /**
      * assigning context on Vue.observable to be access from outside Vue instance
      *
-     * @instance $LDraw.instance
+     * @instance <l-draw> component reference
      */
-    this.$LDraw.instance = this
+    this.$L.DRAW = this
 
-    // LFeatureGroup parent
-    this.LFeatureGroup = findRealParent(this.$parent).mapObject
-    // LMap parent
-    this.LMap = findRealParent(this.$parent.$parent).mapObject
+    // getting featureGroup.mapObject reference from <l-feature-group> component
+    this.$L.tempLayers = findRealParent(this.$parent).mapObject
+    // getting map.mapObject reference from <l-map> component
+    this.$L.map = findRealParent(this.$parent.$parent).mapObject
 
-    this.LMap.addLayer(this.LFeatureGroup)
+    this.$L.map.addLayer(this.$L.tempLayers)
 
     this.mapObject = new Control.Draw({
       edit: {
-        featureGroup: this.LFeatureGroup
+        featureGroup: this.$L.tempLayers
       },
       // draw settings
       draw: {
@@ -53,9 +46,9 @@ export default {
       }
     })
 
-    this.LMap.addControl(this.mapObject)
+    this.$L.map.addControl(this.mapObject)
 
-    this.LFeatureGroup.addTo(this.LMap)
+    this.$L.tempLayers.addTo(this.$L.map)
 
     // Lmap events with leaflet-draw plugin
     this.onDrawCREATED()
@@ -70,6 +63,18 @@ export default {
 
   methods: {
     /**
+     * Lmap @event CREATED
+     * @package leaflet-draw
+     */
+    onDrawCREATED () {
+      this.$L.map.on(Draw.Event.CREATED, ({ layer }) => {
+        this.$L.tempLayers.addLayer(layer)
+        // bindPopup Menu to layer created
+        layer.bindPopup(this.popupTemplate(layer._leaflet_id))
+      })
+    },
+
+    /**
      * from popupMenu buttons, action & _leaflet_id
      *
      * @param {String, int}
@@ -77,7 +82,7 @@ export default {
     onClickBtnPopupMenu (action, id) {
       let currentPolygonLayer = null
 
-      this.LMap.eachLayer(layer => {
+      this.$L.tempLayers.eachLayer(layer => {
         if (layer._leaflet_id === id) currentPolygonLayer = layer
       })
 
@@ -92,20 +97,6 @@ export default {
         this.onDeletePolygon(currentPolygonLayer)
         break
       }
-    },
-
-    /**
-     * Lmap @event CREATED
-     * @package leaflet-draw
-     */
-    onDrawCREATED () {
-      this.LMap.on(Draw.Event.CREATED, (e) => {
-        const layer = e.layer
-        console.warn('layer', layer)
-        this.LFeatureGroup.addLayer(layer)
-        // bindPopup to layer created
-        layer.bindPopup(this.popupTemplate(layer._leaflet_id))
-      })
     },
 
     /**
@@ -129,8 +120,7 @@ export default {
      * @param {Layer<Leaflet>}
      */
     onDeletePolygon (layer) {
-      console.warn('layerToDelete', layer)
-      this.LFeatureGroup.removeLayer(layer)
+      this.$L.tempLayers.removeLayer(layer)
     },
 
     /**

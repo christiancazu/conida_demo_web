@@ -18,6 +18,7 @@
           size="mini"
           icon="el-icon-view"
           circle
+          :plain="!polygon.visible"
           @click="$emit('view-polygon', polygon)"
         />
       </el-tooltip>
@@ -59,9 +60,6 @@ export default {
   },
 
   methods: {
-    handleConfirm (e) {
-      console.warn('handleconfirm', e)
-    },
-  },
+  }
 }
 </script>

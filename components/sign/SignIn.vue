@@ -61,6 +61,7 @@ import { $_notify_error } from "@/use/notifications"
 import { ERRORS } from "@/config/messages"
 
 import { required } from '@/config/form.rules'
+import { authService } from '@/services/services.types'
 
 export default {
   data () {
@@ -82,7 +83,7 @@ export default {
 
       await this.$refs.form.validate(result => isFormValid = result)
       if (isFormValid)
-        this.$_authServiceSignIn(this.form)
+        this.$_auth_service(authService.SIGN_IN, this.form)
       else
         $_notify_error(ERRORS.INVALID_DATA)
     }

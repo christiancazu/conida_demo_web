@@ -59,18 +59,15 @@ export default {
         this.$emit('apply-before-submit-form', formData)
 
         try {
-          let submmitedForm = false
+          await this.$_request_service(this.submitAction(formData), 'processingForm')
 
-          await this.$_requestService(this.submitAction(formData).then(() => submmitedForm = true), 'processingForm')
+          $_notify_success(SUCCESS[notifyType])
 
-          if (submmitedForm) {
-            $_notify_success(SUCCESS[notifyType])
+          if (storeAction === 'create') this.resetForm()
 
-            if (storeAction === 'create') this.resetForm()
-            this.$emit('apply-after-submit-form')
-          }
-        } catch (error) {
-        }
+          this.$emit('apply-after-submit-form')
+
+        } catch (error) {}
 
       } else {
         $_notify_error(ERRORS.INVALID_DATA)

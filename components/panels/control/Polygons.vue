@@ -13,11 +13,11 @@ import CardPolygon from '@/components/card/CardPolygon'
 
 import mountableAsDynamicMixin from "@/mixins/mountableAsDynamic.mixin"
 
-import { geoJson } from "leaflet"
-
 import { mapState } from "vuex"
 import { $_notify_success } from '@/use/notifications'
 import { SUCCESS } from '@/config/messages'
+import { leafLetService } from '@/services/services.types'
+import { SET_ACTIVE_VISIBLE_POLYGON_BUTTON } from '@/store/mutations.types'
 
 export default {
   components: {
@@ -43,17 +43,12 @@ export default {
 
   methods: {
     viewPolygon (polygon) {
+      const createdPolygon = this.$_leafLet_service(leafLetService.ADD_LAYER, polygon, this.$L.projectLayers)
 
-      const polygonCreated = geoJson(JSON.parse((polygon.geometry)))
-      polygonCreated.id = polygon.id
-      polygonCreated.addTo(this.$LMap.instance)
+      // apply bounds if createdPolygon was created
+      if (createdPolygon) this.$L.map.fitBounds(createdPolygon.getBounds())
 
-
-      // .bindPopup(polygonCreated._leaflet_id)
-      polygonCreated.bindPopup(this.$LDraw.instance.popupTemplate(polygonCreated._leaflet_id))
-
-      console.warn('poylgon', polygonCreated)
-      // this.$LDraw.instance.onDeletePolygon(polygonCreated)
+      this.$store.commit(`polygons/${SET_ACTIVE_VISIBLE_POLYGON_BUTTON}`, polygon.id)
     },
 
     /**
@@ -62,7 +57,14 @@ export default {
      */
     async deletePolygon ({ id }) {
       try {
-        await this.$_requestService(this.deleteAction(id), 'loadingDrawer')
+        await this.$_request_service(this.deleteAction(id), 'loadingDrawer')
+
+        const layerExists = this.$_leafLet_service(leafLetService.FIND_LAYER, { id }, this.$L.projectLayers)
+
+        if (layerExists) this.$_leafLet_service(leafLetService.DELETE_LAYER, layerExists, this.$L.projectLayers)
+
+        this.$_leafLet_service(leafLetService.SET_ACTIVE_VISIBLE_POLYGONS_BUTTONS, this.$L.projectLayers)
+
         $_notify_success(SUCCESS.DELETED)
       } catch (error) {
       }
@@ -73,17 +75,12 @@ export default {
      */
     async deleteAction (id) {
       await this.$store.dispatch('polygons/deleteItemContext', id)
-      this.getDataContext()
-    },
-
-    async getDataContext () {
       await this.$store.dispatch('polygons/getDataContext')
-
     },
 
     async init () {
       try {
-        await this.$_requestService(this.getDataContext(), 'loadingDrawer')
+        await this.$_request_service(this.$store.dispatch('polygons/getDataContext'), 'loadingDrawer')
       } catch (error) {
       }
     }

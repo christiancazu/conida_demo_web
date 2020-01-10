@@ -1,13 +1,14 @@
-import { signIn, signOut } from '@/services/auth.service'
-import { request } from '@/services/request.service'
+import auth from '@/services/auth.service'
+import request from '@/services/request.service'
+import leafLet from '@/services/leafLet.service'
 
 /**
  * INJECTING NUXT AUTH SERVICES
  */
 export default ({ app }, inject) => {
-  inject('_authServiceSignIn', data => signIn(app, data))
+  inject('_auth_service', (service, ...args) => auth[service](...args, app))
 
-  inject('_authServiceSignOut', () => signOut(app))
+  inject('_request_service', (...args) => request(...args, app))
 
-  inject('_requestService', (callback, spinnerType) => request(app, callback, spinnerType))
+  inject('_leafLet_service', (service, ...args) => leafLet[service](...args, app))
 }

@@ -39,6 +39,7 @@ export default {
     dynamicTitle: 'Registrar Polígono',
 
     form: {
+      project_id: 3,
       name: '',
       geometry: '',
       description: ''
@@ -63,12 +64,16 @@ export default {
     },
 
     /**
-     * removing polygon from LDraw instance
+     * removing polygon from tempLayers
      * closing dialog
      */
-    applyAfterSubmitForm () {
-      this.$LDraw.instance.onDeletePolygon(this.properties)
+    async applyAfterSubmitForm () {
+      this.$L.tempLayers.removeLayer(this.properties)
       this.$_mountableAsDynamic_closeDialog()
+      try {
+        await this.$_request_service(await this.$store.dispatch('polygons/getDataContext'), 'loadingDrawer')
+      } catch (error) {
+      }
     }
   }
 }
