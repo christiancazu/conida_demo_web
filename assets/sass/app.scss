@@ -1,5 +1,8 @@
-@import 'variables.scss';
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Titillium+Web:400,600,700&display=swap');
+@import 'variables';
+@import 'utils.sass';
 @import 'mixins/mixins.scss';
 @import 'components/components.scss';
 @import 'pages/pages.scss';
-@import 'global.scss';
+@import 'element.sass';
+@import 'global';

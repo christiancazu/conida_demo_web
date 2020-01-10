@@ -10,7 +10,7 @@
     >
 
       <l-tile-layer :url="tileLayer.url" />
-
+      <l-side-by-side />
       <l-feature-group>
         <l-draw @add-polygon="launchAddPolygonDialog" />
       </l-feature-group>
@@ -34,11 +34,13 @@ import {
   LMap,
   LTileLayer,
   LLayerGroup,
+  // LControl,
   LFeatureGroup
 } from 'vue2-leaflet'
 
 import LDraw from '@/components/leaflet/LDraw'
 // import LProjectLayers from '@/components/leaflet/LProjectLayers'
+import LSideBySide from '@/components/leaflet/LSideBySide'
 
 import dialogDynamicMixin from '@/mixins/dialogDynamic.mixin'
 import { SERVICES } from '@/services/services.types'
@@ -49,13 +51,15 @@ export default {
     LTileLayer,
     LFeatureGroup,
     LDraw,
-    LLayerGroup
+    LLayerGroup,
+    LSideBySide
   },
 
   mixins: [dialogDynamicMixin],
 
   data () {
     return {
+      ready: false,
       // leaflet
       map: {
         latLng: [
@@ -72,7 +76,10 @@ export default {
           type: 'component',
           path: 'polygons/AddPolygon'
         }
-      }
+      },
+
+      tile1: {},
+      tile2: {}
     }
   },
 
