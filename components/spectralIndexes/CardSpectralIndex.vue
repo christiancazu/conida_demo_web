@@ -99,8 +99,6 @@ export default {
     viewInMapSpectralIndex (item) {
       // this.closeInMapSpectralIndex()
       this.$store.commit(`satelitalIndexes/${SET_SIDE_BY_SIDE_VISIBLE}`, true)
-      // this.$store.commit(`satelitalIndexes/${SET_SELECTED_SATELITAL_INDEX}`, null)
-      // this.$store.commit(`satelitalIndexes/${SET_LAYER_SATELITAL_INDEX}`, [])
       const layerBase = {
         geometry: item.geometry,
         baseUrl: item.service,

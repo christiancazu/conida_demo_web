@@ -15,7 +15,6 @@
     :key="i"
     :base-url="item.baseUrl"
     :layers="item.layer"
-    name="xxx"
     layer-type="overlay"
     :transparent="true"
     format="image/png"
@@ -42,7 +41,8 @@ export default {
       LMap: {},
       layerBase: null,
       layerResult: null,
-      LSideBySide: null
+      LSideBySide: null,
+      visible: false
     }
   },
 
@@ -61,6 +61,10 @@ export default {
       if (!val) {
         this.removeSideBySide()
       }
+    },
+    satelitalIndex: function (val) {
+      console.log(val)
+      // this.addSideBySide()
     }
   },
 
@@ -70,10 +74,12 @@ export default {
 
   methods: {
     test (layer, item) {
+      console.log('cargo nuevos layers')
       let typeIndex = item.typeImage
       this[typeIndex] = layer
-      this.addS
+      this.addSideBySide()
     },
+
     addSideBySide () {
       if (this.layerBase && this.layerResult) {
         this.$nextTick(() => {
@@ -84,6 +90,7 @@ export default {
         })
       }
     },
+
     removeSideBySide () {
       this.LMap.removeControl(this.LSideBySide)
       this.$store.commit(`satelitalIndexes/${SET_LAYER_SATELITAL_INDEX}`, [])
