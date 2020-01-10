@@ -5,7 +5,8 @@
   :visible.sync="visible"
   append-to-body
   direction="ltr"
-  size="35%"
+  size="33%"
+  :modal="false"
   custom-class="drawer-right"
 >
 

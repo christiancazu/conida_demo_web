@@ -1,15 +1,14 @@
 /* eslint-disable array-bracket-newline */
 /* eslint-disable array-element-newline */
-import { leafLetService } from './services.types'
+import { SERVICES } from './services.types'
 
 import { geoJson } from "leaflet"
 
 import { SET_ACTIVE_VISIBLE_POLYGONS_BUTTONS } from '@/store/mutations.types'
 
 export default {
-  [leafLetService.FIND_LAYER]: function (...args) {
+  [SERVICES.LEAFLET.FIND_LAYER]: function (...args) {
     const [{ id }, groupLayers] = [...args]
-    console.warn(id, groupLayers)
     let layerFound = null
 
     groupLayers.eachLayer(layer => {
@@ -20,17 +19,17 @@ export default {
     return layerFound
   },
 
-  [leafLetService.DELETE_LAYER]: function (...args) {
+  [SERVICES.LEAFLET.DELETE_LAYER]: function (...args) {
     const [layer, groupLayers] = [...args]
     groupLayers.removeLayer(layer)
   },
 
-  [leafLetService.ADD_LAYER]: function (...args) {
+  [SERVICES.LEAFLET.ADD_LAYER]: function (...args) {
     const [layer, groupLayers] = [...args]
-    const layerExists = this[leafLetService.FIND_LAYER](...args)
+    const layerExists = this[SERVICES.LEAFLET.FIND_LAYER](...args)
 
     if (layerExists) {
-      this[leafLetService.DELETE_LAYER](layerExists, groupLayers)
+      this[SERVICES.LEAFLET.DELETE_LAYER](layerExists, groupLayers)
       return
     }
 
@@ -46,12 +45,12 @@ export default {
     return geoJson(layerWithCustomProperties).addTo(groupLayers)
   },
 
-  [leafLetService.GET_LAYERS]: function (...args) {
+  [SERVICES.LEAFLET.GET_LAYERS]: function (...args) {
     const [groupLayers] = [...args]
     return groupLayers.getLayers()
   },
 
-  [leafLetService.SET_ACTIVE_VISIBLE_POLYGONS_BUTTONS]: function (...args) {
+  [SERVICES.LEAFLET.SET_ACTIVE_VISIBLE_POLYGONS_BUTTONS]: function (...args) {
     const [groupLayers, app] = [...args]
     const layersIds = []
 
@@ -64,5 +63,3 @@ export default {
     app.store.commit(`polygons/${SET_ACTIVE_VISIBLE_POLYGONS_BUTTONS}`, layersIds)
   },
 }
-
-// this.$_leafLet_service(leafLetService.GET_LAYERS_IDS, this.$L.projectLayers)

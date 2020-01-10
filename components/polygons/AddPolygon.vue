@@ -20,6 +20,7 @@ import BaseForm from "@/components/base/BaseForm"
 import mountableAsDynamicMixin from '@/mixins/mountableAsDynamic.mixin'
 
 import { required } from "@/config/form.rules"
+import { SERVICES } from '@/services/services.types'
 
 export default {
   components: {
@@ -66,12 +67,16 @@ export default {
     /**
      * removing polygon from tempLayers
      * closing dialog
+     * getting polygons everytime a polygon is created
+     * updating visible polygons buttons
      */
     async applyAfterSubmitForm () {
       this.$L.tempLayers.removeLayer(this.properties)
       this.$_mountableAsDynamic_closeDialog()
       try {
         await this.$_request_service(await this.$store.dispatch('polygons/getDataContext'), 'loadingDrawer')
+
+        this.$_leafLet_service(SERVICES.LEAFLET.SET_ACTIVE_VISIBLE_POLYGONS_BUTTONS, this.$L.projectLayers)
       } catch (error) {
       }
     }

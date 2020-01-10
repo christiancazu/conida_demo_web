@@ -70,7 +70,7 @@ export default {
       this.$L.map.on(Draw.Event.CREATED, ({ layer }) => {
         this.$L.tempLayers.addLayer(layer)
         // bindPopup Menu to layer created
-        layer.bindPopup(this.popupTemplate(layer._leaflet_id))
+        layer.bindPopup(this.popupTemplate(layer._leaflet_id)).openPopup()
       })
     },
 
@@ -108,11 +108,29 @@ export default {
     },
 
     /**
+     * toggle styles when is editing mode
      * @emits edit-polygon
      * @param {Layer<Leaflet>}
      */
     onEditPolygon (layer) {
-      layer.editing.enable()
+      if (layer.editing.enabled()) {
+        layer.setStyle({
+          fillColor :'#3388ff',
+          fillOpacity: "0.2",
+          dashArray: '',
+          strokeWidth: '4'
+        })
+        layer.editing.disable()
+      }
+      else {
+        layer.setStyle({
+          fillColor :'#fe57a1',
+          fillOpacity: "0.1",
+          dashArray: '10, 10',
+          strokeWidth: '4'
+        })
+        layer.editing.enable()
+      }
     },
 
     /**

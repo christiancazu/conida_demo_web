@@ -13,10 +13,11 @@ import {
   ENABLE_SPINNER,
   DISABLE_SPINNER
 } from '@/store/mutations.types'
-import { authService } from './services.types'
+
+import { SERVICES } from './services.types'
 
 export default {
-  [authService.SIGN_IN]: async (...args) => {
+  [SERVICES.AUTH.SIGN_IN]: async (...args) => {
     const [data, app] = [...args]
     try {
       app.store.commit(`spinners/${ENABLE_SPINNER}`, 'processingForm')
@@ -29,7 +30,7 @@ export default {
     app.store.commit(`spinners/${DISABLE_SPINNER}`, 'processingForm')
   },
 
-  [authService.SIGN_OUT]: async app => {
+  [SERVICES.AUTH.SIGN_OUT]: async app => {
     try {
       app.store.commit(`spinners/${ENABLE_SPINNER}`, 'loadingPage')
 
