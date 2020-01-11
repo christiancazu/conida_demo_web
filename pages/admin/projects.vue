@@ -1,49 +1,70 @@
 <template>
 <div class="page">
-  <pageheader title="Mis proyectos" />
+  <el-row>
+    <el-col
+      :sm="12"
+      :md="16" :lg="18"
+    >
+      <el-button
+        round
+        plain
+        type="primary"
+        icon="el-icon-plus"
+        @click="dialogFormVisible = true"
+      >Nuevo</el-button>
+    </el-col>
+  </el-row>
+  <el-row>
+    <el-col
+      :sm="12"
+      :md="16" :lg="18"
+    >
+      <div class="projects">
+        <div
+          v-for="project in projects"
+          :key="project.id"
+          class="card-projects"
+        >
+          <projectcard :data="project" />
+        </div>
+      </div>
+    </el-col>
+    <el-col
+      :sm="12"
+      :md="8" :lg="6"
+    >
+      <el-card class="app-card-info">
+        <h1>¿Qué es un proyecto?</h1>
+        <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro animi quam velit, minus consectetur sint neque ex aperiam laboriosam magnam laborum fugit beatae accusamus. Explicabo culpa laudantium eius et voluptas!</span>
+      </el-card>
+    </el-col>
+  </el-row>
   <div class="row">
     <div class="col-xs-12 col-md-9">
       <div class="row">
         <div class="col-xs-12">
-          <div class="mb-3">
-            <el-button
-              round
-              plain
-              type="primary"
-              icon="el-icon-plus"
-              @click="dialogFormVisible = true"
-            >Nuevo</el-button>
-          </div>
+          <div class="mb-3" />
         </div>
       </div>
       <div class="row">
         <div
           v-for="project in projects"
           :key="project.id" class="col-xs-12 col-md-4"
-        >
-          <projectcard :data="project" />
-        </div>
+        />
       </div>
     </div>
-    <div class="col-xs-12 col-md-3">
-      <el-card class="app-card-info">
-        <h1>¿Qué es un proyecto?</h1>
-        <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro animi quam velit, minus consectetur sint neque ex aperiam laboriosam magnam laborum fugit beatae accusamus. Explicabo culpa laudantium eius et voluptas!</span>
-      </el-card>
-    </div>
+    <div class="col-xs-12 col-md-3" />
   </div>
   <dialognew :visiblemodal="dialogFormVisible" />
 </div>
 </template>
 
 <script>
-import pageheader from '~/components/admin/page-header.vue'
 import projectcard from '~/components/admin/project/card.vue'
 import dialognew from '~/components/admin/project/dialog_new.vue'
 export default {
   layout: 'admin',
   components: {
-    pageheader,
     projectcard,
     dialognew
   },
