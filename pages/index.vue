@@ -5,20 +5,17 @@
 >
   <client-only>
     <l-map
-      ref="map"
       :center="map.latLng"
       :zoom="map.zoom"
     >
 
-      <l-tile-layer
-        :url="tileLayer.url"
-      />
+      <l-tile-layer :url="tileLayer.url" />
 
       <l-feature-group>
         <l-draw @add-polygon="launchAddPolygonDialog" />
       </l-feature-group>
 
-      <l-project-layers />
+      <l-layer-group @ready="onReadyProjectLayers" />
 
     </l-map>
   </client-only>
@@ -36,14 +33,15 @@
 import {
   LMap,
   LTileLayer,
+  LLayerGroup,
   LFeatureGroup
 } from 'vue2-leaflet'
 
 import LDraw from '@/components/leaflet/LDraw'
-import LProjectLayers from '@/components/leaflet/LProjectLayers'
+// import LProjectLayers from '@/components/leaflet/LProjectLayers'
 
 import dialogDynamicMixin from '@/mixins/dialogDynamic.mixin'
-import { authService } from '@/services/services.types'
+import { SERVICES } from '@/services/services.types'
 
 export default {
   components: {
@@ -51,7 +49,7 @@ export default {
     LTileLayer,
     LFeatureGroup,
     LDraw,
-    LProjectLayers
+    LLayerGroup
   },
 
   mixins: [dialogDynamicMixin],
@@ -88,6 +86,13 @@ export default {
       this.$refs.dialogDynamic.$setPropertiesToChild(layer)
     },
 
+    /**
+     * assigning layerGroup to projectLayers
+     */
+    onReadyProjectLayers (mapObject) {
+      this.$L.projectLayers = mapObject
+    },
+
     init () {
       /**
        * resolving width map when resize
@@ -98,7 +103,7 @@ export default {
     },
 
     logout () {
-      this.$_auth_service(authService.SIGN_OUT)
+      this.$_auth_service(SERVICES.AUTH.SIGN_OUT)
     }
   }
 }

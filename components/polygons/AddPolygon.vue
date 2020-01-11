@@ -5,6 +5,7 @@
     prop="name"
   >
     <el-input
+      ref="input"
       v-model="form.name"
       placeholder="nombre del polígono"
       auto-complete="off"
@@ -20,6 +21,7 @@ import BaseForm from "@/components/base/BaseForm"
 import mountableAsDynamicMixin from '@/mixins/mountableAsDynamic.mixin'
 
 import { required } from "@/config/form.rules"
+import { SERVICES } from '@/services/services.types'
 
 export default {
   components: {
@@ -56,6 +58,8 @@ export default {
 
   mounted () {
     this.setGeometryAsGeoJSON()
+    // set focus on input
+    this.$refs.input.$el.children[0].focus()
   },
 
   methods: {
@@ -66,12 +70,14 @@ export default {
     /**
      * removing polygon from tempLayers
      * closing dialog
+     * getting polygons everytime a polygon is created
+     * updating visible polygons buttons
      */
     async applyAfterSubmitForm () {
       this.$L.tempLayers.removeLayer(this.properties)
       this.$_mountableAsDynamic_closeDialog()
       try {
-        await this.$_request_service(await this.$store.dispatch('polygons/getDataContext'), 'loadingDrawer')
+        await this.$_leafLet_service(SERVICES.LEAFLET.FETCH_PROJECT_LAYERS, this.$L.projectLayers)
       } catch (error) {
       }
     }

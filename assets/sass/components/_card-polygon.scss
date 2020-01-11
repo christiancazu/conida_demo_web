@@ -10,4 +10,8 @@
     display: flex;
     justify-content: space-between;
   }
+
+  & button > i {
+    pointer-events: none;
+  }
 }

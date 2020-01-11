@@ -14,12 +14,13 @@
         class="item" effect="dark" placement="top"
       >
         <el-button
+          ref="viewBtn"
           type="primary"
           size="mini"
           icon="el-icon-view"
           circle
           :plain="!polygon.visible"
-          @click="$emit('view-polygon', polygon)"
+          @click="onViewPolygon($event, polygon)"
         />
       </el-tooltip>
 
@@ -56,10 +57,15 @@ export default {
     polygons: {
       type: Array,
       default: () => []
-    },
+    }
   },
 
   methods: {
-  }
+    onViewPolygon (e, polygon) {
+      // prevent blur when click button
+      e.currentTarget.blur()
+      this.$emit('view-polygon', polygon)
+    }
+  },
 }
 </script>

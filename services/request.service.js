@@ -7,7 +7,6 @@ import {
 
 export default async (...args) => {
   const [callback, spinnerType = null, app] = [...args]
-
   try {
     if (spinnerType) app.store.commit(`spinners/${ENABLE_SPINNER}`, spinnerType)
 

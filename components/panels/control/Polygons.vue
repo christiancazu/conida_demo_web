@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import CardPolygon from '@/components/card/CardPolygon'
+import CardPolygon from '@/components/cards/CardPolygon'
 
 import mountableAsDynamicMixin from "@/mixins/mountableAsDynamic.mixin"
 
 import { mapState } from "vuex"
 import { $_notify_success } from '@/use/notifications'
 import { SUCCESS } from '@/config/messages'
-import { leafLetService } from '@/services/services.types'
+import { SERVICES } from '@/services/services.types'
 import { SET_ACTIVE_VISIBLE_POLYGON_BUTTON } from '@/store/mutations.types'
 
 export default {
@@ -43,39 +43,35 @@ export default {
 
   methods: {
     viewPolygon (polygon) {
-      const createdPolygon = this.$_leafLet_service(leafLetService.ADD_LAYER, polygon, this.$L.projectLayers)
+      const createdPolygon = this.$_leafLet_service(SERVICES.LEAFLET.ADD_LAYER, polygon, this.$L.projectLayers)
 
       // apply bounds if createdPolygon was created
-      if (createdPolygon) this.$L.map.fitBounds(createdPolygon.getBounds())
+      if (createdPolygon) this.$L.map.fitBounds(createdPolygon.getBounds(), {
+        paddingBottomRight: [
+          450, 0
+        ]
+      })
 
       this.$store.commit(`polygons/${SET_ACTIVE_VISIBLE_POLYGON_BUTTON}`, polygon.id)
     },
 
     /**
      * deletePolygon handler
-     * @param {int} id: from polygonLayer
+     * @param {Layer} from polygonLayer
      */
-    async deletePolygon ({ id }) {
+    async deletePolygon (polygon) {
       try {
-        await this.$_request_service(this.deleteAction(id), 'loadingDrawer')
+        await this.$_request_service(this.$store.dispatch('polygons/deleteItemContext', polygon.id), 'loadingDrawer')
 
-        const layerExists = this.$_leafLet_service(leafLetService.FIND_LAYER, { id }, this.$L.projectLayers)
+        const polygonExists = this.$_leafLet_service(SERVICES.LEAFLET.FIND_LAYER, polygon, this.$L.projectLayers)
 
-        if (layerExists) this.$_leafLet_service(leafLetService.DELETE_LAYER, layerExists, this.$L.projectLayers)
+        if (polygonExists) this.$_leafLet_service(SERVICES.LEAFLET.DELETE_LAYER, polygonExists, this.$L.projectLayers)
 
-        this.$_leafLet_service(leafLetService.SET_ACTIVE_VISIBLE_POLYGONS_BUTTONS, this.$L.projectLayers)
+        await this.$_leafLet_service(SERVICES.LEAFLET.FETCH_PROJECT_LAYERS, this.$L.projectLayers)
 
         $_notify_success(SUCCESS.DELETED)
       } catch (error) {
       }
-    },
-
-    /**
-     * delete callback
-     */
-    async deleteAction (id) {
-      await this.$store.dispatch('polygons/deleteItemContext', id)
-      await this.$store.dispatch('polygons/getDataContext')
     },
 
     async init () {
