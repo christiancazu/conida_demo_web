@@ -1,9 +1,12 @@
+.header-projects {
+  display: flex;
+}
 .projects {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
 
   .card-projects {
-    max-width: 23vw;
+    max-width: 20vw;
   }
 }
