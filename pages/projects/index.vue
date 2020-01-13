@@ -1,15 +1,5 @@
 <template>
 <div>
-  <!--
-  <el-row>
-    <el-col
-      :sm="24"
-      :md="12"
-      :lg="7"
-    >
-
-    </el-col>
-  </el-row> -->
   <el-row :gutter="10">
     <el-col
       :sm="12"
@@ -18,13 +8,13 @@
     >
       <div class="pt-2 pl-2 header-projects">
         <el-button
-          v-model="search"
           type="primary"
           icon="el-icon-plus"
           class="mr-3 mb-3"
           @click="$_dialogDynamicMixin_dialogOpen('addProject')"
         >CREAR PROYECTO</el-button>
         <el-input
+          v-model="search"
           placeholder="Buscar..."
           class="pb-3"
           suffix-icon="el-icon-search"
@@ -87,13 +77,23 @@ export default {
   },
   computed: {
     ...mapState({
-      projects: (state) => state.projects.dataContext
-    })
+      dataContext: (state) => state.projects.dataContext
+    }),
+    projects: function () {
+      let results = this.$store.state.projects.dataContext
+      if (this.search) {
+        const searchUppercase = this.search.toLowerCase()
+        results = this.dataContext.filter(item => {
+          return item.name.toLowerCase().includes(searchUppercase)
+        })
+      }
+      return results
+    }
   },
 
   created () {
     this.$store.dispatch('projects/getDataContext')
-  },
+  }
 }
 </script>
 
