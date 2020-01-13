@@ -7,14 +7,15 @@
     <l-map
       :center="map.latLng"
       :zoom="map.zoom"
+      @ready="onReadyLMap"
     >
 
       <l-tile-layer :url="tileLayer.url" />
 
-      <l-feature-group>
-        <l-draw @add-polygon="launchAddPolygonDialog" />
-      </l-feature-group>
+      <!-- tempLayers -->
+      <l-draw @add-polygon="launchAddPolygonDialog" />
 
+      <!-- projectLayers -->
       <l-layer-group @ready="onReadyProjectLayers" />
 
     </l-map>
@@ -33,12 +34,10 @@
 import {
   LMap,
   LTileLayer,
-  LLayerGroup,
-  LFeatureGroup
+  LLayerGroup
 } from 'vue2-leaflet'
 
 import LDraw from '@/components/leaflet/LDraw'
-// import LProjectLayers from '@/components/leaflet/LProjectLayers'
 
 import dialogDynamicMixin from '@/mixins/dialogDynamic.mixin'
 import { SERVICES } from '@/services/services.types'
@@ -47,7 +46,6 @@ export default {
   components: {
     LMap,
     LTileLayer,
-    LFeatureGroup,
     LDraw,
     LLayerGroup
   },
@@ -86,6 +84,12 @@ export default {
       this.$refs.dialogDynamic.$setPropertiesToChild(layer)
     },
 
+    /**
+     * getting map.mapObject reference from <l-map> component
+     */
+    onReadyLMap (mapObject) {
+      this.$L.map = mapObject
+    },
     /**
      * assigning layerGroup to projectLayers
      */

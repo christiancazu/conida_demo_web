@@ -1,12 +1,13 @@
 import {
   ENABLE_SPINNER,
-  DISABLE_SPINNER
+  DISABLE_SPINNER,
+  SPINNERS
 } from './mutations.types'
 
 export const state = () => ({
-  processingForm: false,
-  loadingDrawer: false,
-  loadingPage: false
+  [SPINNERS.PROCESSING_FORM]: false,
+  [SPINNERS.LOADING_DRAWER]: false,
+  [SPINNERS.LOADING_PAGE]: false
 })
 
 export const mutations = {

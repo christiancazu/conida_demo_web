@@ -3,7 +3,7 @@
   <el-card class="sign-in__form">
     <el-image
       :class="[
-        {'logo-animation': $store.state.spinners.processingForm},
+        {'logo-animation': $store.state.spinners.PROCESSING_FORM},
         ['sign-in__form__logo']
       ]"
       src="images/veox-logo.png"
@@ -12,7 +12,7 @@
     <h1 class="sign-in__form__title">VEOX</h1>
     <el-form
       ref="form"
-      :disabled="$store.state.spinners.processingForm"
+      :disabled="$store.state.spinners.PROCESSING_FORM"
       :model="form"
       :rules="rules"
       @submit.native.prevent="signIn"
@@ -36,7 +36,7 @@
       </el-form-item>
       <el-form-item>
         <el-button
-          :loading="$store.state.spinners.processingForm"
+          :loading="$store.state.spinners.PROCESSING_FORM"
           class="sign-in__form__btn"
           type="primary"
           native-type="submit"
@@ -82,6 +82,7 @@ export default {
       let isFormValid = false
 
       await this.$refs.form.validate(result => isFormValid = result)
+
       if (isFormValid)
         this.$_auth_service(SERVICES.AUTH.SIGN_IN, this.form)
       else

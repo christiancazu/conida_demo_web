@@ -48,6 +48,11 @@
       </el-tooltip>
     </div>
   </el-card>
+  <h4
+    v-if="!polygons.length"
+    class="text-center"
+  >No se encontraron polígonos
+  </h4>
 </section>
 </template>
 
@@ -56,7 +61,7 @@ export default {
   props: {
     polygons: {
       type: Array,
-      default: () => []
+      default: () => ([])
     }
   },
 
@@ -66,6 +71,6 @@ export default {
       e.currentTarget.blur()
       this.$emit('view-polygon', polygon)
     }
-  },
+  }
 }
 </script>

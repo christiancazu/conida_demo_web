@@ -1,9 +1,13 @@
+<template>
+<l-feature-group @ready="onReadyFeatureGroup" />
+</template>
+
 <script>
 /**
  * Listener on click buttons to bindPopup menu buttons
  * accessing to vue.obserbable $LDraw instance component
  */
-document.addEventListener('click', e => {
+document.body.addEventListener('click', e => {
   if (e.target.tagName === 'BUTTON' && e.target.classList.contains('btn-leaflet-popup')) {
     const action = e.target.getAttribute('data-action')
     const id = Number(e.target.getAttribute('data-leaflet-id'))
@@ -12,56 +16,64 @@ document.addEventListener('click', e => {
   }
 })
 
-import { Control, Draw } from 'leaflet'
+import {
+  Draw,
+  Control
+} from 'leaflet'
 
-import { findRealParent } from 'vue2-leaflet'
+import { LFeatureGroup } from 'vue2-leaflet'
 
 import 'leaflet-draw'
 
 export default {
-  mounted () {
-    /**
+  components: {
+    LFeatureGroup
+  },
+
+  methods: {
+    onReadyFeatureGroup (LFeatureGroupMapObject) {
+      // getting featureGroup.mapObject reference from <l-feature-group> component
+      this.$L.tempLayers = LFeatureGroupMapObject
+      this.init()
+    },
+
+    init () {
+      /**
      * assigning context on Vue.observable to be access from outside Vue instance
      *
      * @instance <l-draw> component reference
      */
-    this.$L.DRAW = this
+      this.$L.DRAW = this
 
-    // getting featureGroup.mapObject reference from <l-feature-group> component
-    this.$L.tempLayers = findRealParent(this.$parent).mapObject
-    // getting map.mapObject reference from <l-map> component
-    this.$L.map = findRealParent(this.$parent.$parent).mapObject
+      this.$L.map.addLayer(this.$L.tempLayers)
 
-    this.$L.map.addLayer(this.$L.tempLayers)
+      this.mapObject = new Control.Draw({
+        edit: {
+          featureGroup: this.$L.tempLayers
+        },
+        // draw settings
+        draw: {
+          marker: false,
+          circle: false,
+          circlemarker: false
+        }
+      })
 
-    this.mapObject = new Control.Draw({
-      edit: {
-        featureGroup: this.$L.tempLayers
-      },
-      // draw settings
-      draw: {
-        marker: false,
-        circle: false,
-        circlemarker: false
-      }
-    })
+      this.$L.map.addControl(this.mapObject)
 
-    this.$L.map.addControl(this.mapObject)
+      this.$L.tempLayers.addTo(this.$L.map)
 
-    this.$L.tempLayers.addTo(this.$L.map)
-
-    // Lmap events with leaflet-draw plugin
-    this.onDrawCREATED()
-    /**
+      // Lmap events with leaflet-draw plugin
+      this.onDrawCREATED()
+      /**
      * TODO: DRAW EVENTS
      */
 
-    this.$nextTick(() => {
-      this.$emit('ready', this.mapObject)
-    })
-  },
+      this.$nextTick(() => {
+        this.$emit('ready', this.mapObject)
+      })
+    },
 
-  methods: {
     /**
      * Lmap @event CREATED
      * @package leaflet-draw
@@ -76,25 +88,24 @@ export default {
 
     /**
      * from popupMenu buttons, action & _leaflet_id
-     *
      * @param {String, int}
      */
     onClickBtnPopupMenu (action, id) {
-      let currentPolygonLayer = null
+      let polygonLayer = null
 
       this.$L.tempLayers.eachLayer(layer => {
-        if (layer._leaflet_id === id) currentPolygonLayer = layer
+        if (layer._leaflet_id === id) polygonLayer = layer
       })
 
       switch (action) {
       case 'add':
-        this.onAddPolygon(currentPolygonLayer)
+        this.onAddPolygon(polygonLayer)
         break
       case 'edit':
-        this.onEditPolygon(currentPolygonLayer)
+        this.onEditPolygon(polygonLayer)
         break
       case 'delete':
-        this.onDeletePolygon(currentPolygonLayer)
+        this.onDeletePolygon(polygonLayer)
         break
       }
     },
@@ -109,7 +120,6 @@ export default {
 
     /**
      * toggle styles when is editing mode
-     * @emits edit-polygon
      * @param {Layer<Leaflet>}
      */
     onEditPolygon (layer) {
@@ -174,8 +184,6 @@ export default {
         </button>
       `
     }
-  },
-
-  render: () => ({})
+  }
 }
 </script>

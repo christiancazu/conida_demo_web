@@ -4,14 +4,17 @@ import { SERVICES } from './services.types'
 
 import { geoJson } from "leaflet"
 
-import { SET_ACTIVE_VISIBLE_POLYGONS_BUTTONS } from '@/store/mutations.types'
+import {
+  SET_ACTIVE_VISIBLE_POLYGONS_BUTTONS,
+  SET_ACTIVE_VISIBLE_POLYGON_BUTTON,
+  SPINNERS
+} from '@/store/mutations.types'
 
 export default {
-  [SERVICES.LEAFLET.FIND_LAYER]: function (...args) {
-    const [{ id }, groupLayers] = [...args]
+  [SERVICES.LEAFLET.FIND_PROJECT_LAYER_BY_POLYGON_ID]: function (id, app) {
     let layerFound = null
 
-    groupLayers.eachLayer(layer => {
+    app.$L.projectLayers.eachLayer(layer => {
       layer.eachLayer(l => {
         if (l.feature.properties.id === id) layerFound = layer
       })
@@ -24,30 +27,55 @@ export default {
     groupLayers.removeLayer(layer)
   },
 
-  [SERVICES.LEAFLET.ADD_LAYER]: function (...args) {
-    const [layer, groupLayers] = [...args]
-    const layerExists = this[SERVICES.LEAFLET.FIND_LAYER](...args)
+  [SERVICES.LEAFLET.VIEW_PROJECT_LAYER]: function (...args) {
+    const [polygon, app] = [...args]
+    const layerExists = this[SERVICES.LEAFLET.FIND_PROJECT_LAYER_BY_POLYGON_ID](polygon.id, app)
+    let polygonId = null
 
     if (layerExists) {
-      this[SERVICES.LEAFLET.DELETE_LAYER](layerExists, groupLayers)
-      return
+      this[SERVICES.LEAFLET.DELETE_LAYER](layerExists, app.$L.projectLayers)
+      polygonId = polygon.id
+
+    } else {
+      const layerCreated = geoJson({
+        type: "Feature",
+        properties: {
+          id: polygon.id,
+          visible: true,
+          hightLighted: false
+        },
+        geometry: JSON.parse(polygon.geometry)
+      }).addTo(app.$L.projectLayers)
+
+      app.$L.map.fitBounds(layerCreated.getBounds(), {
+        paddingBottomRight: [
+          300, 0
+        ]
+      })
+      for (const key in layerCreated._layers) {
+        polygonId = layerCreated._layers[key].feature.properties.id
+      }
     }
 
-    let layerWithCustomProperties = {
-      type: "Feature",
-      properties: {
-        id: layer.id,
-        visible: true
-      },
-      geometry: JSON.parse(layer.geometry)
-    }
-
-    return geoJson(layerWithCustomProperties).addTo(groupLayers)
+    app.store.commit(`polygons/${SET_ACTIVE_VISIBLE_POLYGON_BUTTON}`, polygonId)
   },
 
   [SERVICES.LEAFLET.GET_LAYERS]: function (...args) {
     const [groupLayers] = [...args]
     return groupLayers.getLayers()
+  },
+
+  [SERVICES.LEAFLET.HIGHLIGHT_LAYER]: function (...args) {
+    const [layer] = [...args]
+    console.warn(layer)
+
+    // else {
+    //   polygonCreated.setStyle({fillColor :'cyan'})
+    // }
+    layer.setStyle({fillColor :'cyan'})
+    setTimeout(() => {
+      layer.resetStyle()
+    }, 1000)
   },
 
   /**
@@ -59,7 +87,7 @@ export default {
     const layersIds = []
 
     try {
-      await app.$_request_service(app.store.dispatch('polygons/getDataContext'), 'loadingDrawer')
+      await app.$_request_service(app.store.dispatch('polygons/getDataContext'), SPINNERS.LOADING_DRAWER)
 
       groupLayers.eachLayer(layer => {
         layer.eachLayer(l => {

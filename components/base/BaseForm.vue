@@ -20,7 +20,7 @@
       type="success"
       size="small"
       native-type="submit"
-      :loading="$store.state.spinners.processingForm"
+      :loading="$store.state.spinners.PROCESSING_FORM"
       @click.prevent="submitForm"
     >
       GUARDAR
@@ -42,6 +42,8 @@ import {
   ERRORS
 } from '@/config/messages'
 
+import { SPINNERS } from '@/store/mutations.types'
+
 export default {
   methods: {
     async submitForm () {
@@ -59,7 +61,7 @@ export default {
         this.$emit('apply-before-submit-form', formData)
 
         try {
-          await this.$_request_service(this.submitAction(formData), 'processingForm')
+          await this.$_request_service(this.submitAction(formData), SPINNERS.PROCESSING_FORM)
 
           $_notify_success(SUCCESS[notifyType])
 
