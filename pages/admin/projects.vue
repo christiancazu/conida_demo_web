@@ -3,7 +3,8 @@
   <el-row>
     <el-col
       :sm="12"
-      :md="16" :lg="18"
+      :md="16"
+      :lg="18"
     >
       <el-button
         round
@@ -17,7 +18,8 @@
   <el-row>
     <el-col
       :sm="12"
-      :md="16" :lg="18"
+      :md="16"
+      :lg="18"
     >
       <div class="projects">
         <div
@@ -31,7 +33,8 @@
     </el-col>
     <el-col
       :sm="12"
-      :md="8" :lg="6"
+      :md="8"
+      :lg="6"
     >
       <el-card class="app-card-info">
         <h1>¿Qué es un proyecto?</h1>
@@ -49,7 +52,8 @@
       <div class="row">
         <div
           v-for="project in projects"
-          :key="project.id" class="col-xs-12 col-md-4"
+          :key="project.id"
+          class="col-xs-12 col-md-4"
         />
       </div>
     </div>
@@ -62,6 +66,7 @@
 <script>
 import projectcard from '~/components/admin/project/card.vue'
 import dialognew from '~/components/admin/project/dialog_new.vue'
+import { mapState } from 'vuex'
 export default {
   layout: 'admin',
   components: {
@@ -102,6 +107,16 @@ export default {
         }
       ]
     }
+  },
+
+  computed: {
+    ...mapState({
+      projects: (state) => state.projects.dataContext
+    })
+  },
+
+  created (){
+    console.log('teset')
   }
 }
 </script>

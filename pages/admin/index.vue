@@ -19,6 +19,8 @@
 
 <script>
 import dialognew from '~/components/admin/project/dialog_new.vue'
+import { mapState } from 'vuex'
+
 export default {
   layout: 'admin',
   components: {
@@ -28,7 +30,16 @@ export default {
     return {
       dialogFormVisible: false,
     }
-  }
+  },
+  computed: {
+    ...mapState({
+      projects: (state) => state.projects.dataContext
+    })
+  },
+
+  created () {
+    this.$store.dispatch('projects/getDataContext')
+  },
 }
 </script>
 
