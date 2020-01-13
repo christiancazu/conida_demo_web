@@ -19,6 +19,7 @@
           class="pb-3"
           suffix-icon="el-icon-search"
           style="width:290px"
+          clearable
         />
       </div>
       <div class="projects">
