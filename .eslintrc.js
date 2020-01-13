@@ -57,11 +57,11 @@ module.exports = {
       'error',
       {
         multiline: true,
-        minItems: 1
+        minItems: 3
       }
     ],
     'array-bracket-newline': [
-      'warn',
+      'error',
       {
         multiline: true,
         minItems: 2

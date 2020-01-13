@@ -1,17 +1,11 @@
 <template>
-<el-menu
-  default-active="2"
-  :background-color="sidebarBgColor"
-  :active-text-color="sidebarActiveTextColor"
-  :collapse="isCollapse"
-  @open="handleOpen"
-  @close="handleClose"
->
-  <el-menu-item index="2">
-    <i class="el-icon-menu" />
-    <span slot="title">IMAGES PANEL</span>
-  </el-menu-item>
-</el-menu>
+<el-input
+  v-model="input"
+  placeholder="Buscar imágenes"
+  clearable
+  class="my-4 ml-2 pa-0"
+  style="width: 280px"
+/>
 </template>
 
 <script>
@@ -26,7 +20,8 @@ export default {
     sidebarBgColor,
     sidebarActiveTextColor,
     // sidebar
-    isCollapse: false
+    isCollapse: false,
+    input: ''
   }),
 
   methods: {

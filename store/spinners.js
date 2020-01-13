@@ -5,7 +5,7 @@ import {
 
 export const state = () => ({
   processingForm: false,
-  loadingTable: false,
+  loadingDrawer: false,
   loadingPage: false
 })
 

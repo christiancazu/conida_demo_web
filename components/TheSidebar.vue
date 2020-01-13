@@ -5,14 +5,20 @@
 >
 
   <el-tab-pane>
-    <span slot="label"><i class="el-icon-menu" /> TAB 1</span>
+    <span
+      slot="label"
+      class="text-center"
+    ><i class="el-icon-picture" /> IMÁGENES</span>
 
     <panel-images />
 
   </el-tab-pane>
 
   <el-tab-pane>
-    <span slot="label"><i class="el-icon-menu" /> TAB 2</span>
+    <span
+      slot="label"
+      class="text-center"
+    ><i class="el-icon-menu" /> MENU</span>
 
     <panel-control @select-component-dynamic="openDrawerDynamic" />
 

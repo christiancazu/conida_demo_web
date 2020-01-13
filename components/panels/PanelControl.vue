@@ -56,6 +56,13 @@ export default {
           type: 'component',
           path:'panels/control/Test'
         }
+      },
+      {
+        title: 'Indices Espectrales', icon: 'el-icon-menu',
+        component: {
+          type: 'component',
+          path:'spectralIndexes/SpectralIndexes'
+        }
       }
     ]
   }),

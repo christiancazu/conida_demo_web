@@ -24,9 +24,12 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
       { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/flexboxgrid@6.3.1/dist/flexboxgrid.min.css' },
       { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css' }
-    ]
+    ],
+
+    //script: [{src:"/leaflet/leaflet-side.min.js"}]
   },
   /*
    ** Customize the progress-bar color
@@ -35,7 +38,11 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['node_modules/leaflet/dist/leaflet.css'],
+  css: [
+    '@/assets/sass/app.scss',
+    'node_modules/leaflet/dist/leaflet.css',
+    'node_modules/leaflet-draw/dist/leaflet.draw.css'
+  ],
   /*
    ** Plugins to load before mounting the App
    */
@@ -43,6 +50,8 @@ export default {
     '@/plugins/element-ui',
     '@/plugins/axios',
     '@/plugins/services',
+    '@/plugins/api',
+    { src: '@/plugins/leafLet', ssr: false }
   ],
   /*
    ** Nuxt.js modules
@@ -82,7 +91,7 @@ export default {
    ** Global middleware from auth module
    */
   router: {
-    // middleware: ['auth']
+    middleware: ['auth']
   },
   /**
    ** Schemes define authentication logic

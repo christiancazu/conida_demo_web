@@ -1,5 +1,6 @@
 .the-navbar {
   @extend .full-width;
+  
   &__menu {
     @extend .px-5;
     border-bottom: inherit;
@@ -12,6 +13,15 @@
       font-weight: bold;
       letter-spacing: 2px;
     }
+
+    &--left, &--right {
+      display: flex;
+    }
+  }
+  .el-submenu__title,
+  .el-menu-item {
+    height: $--navbar-height;
+    line-height: $--navbar-height;
   }
 }
 

@@ -5,58 +5,34 @@
   :close-on-click-modal="false"
   append-to-body
   destroy-on-close
-  center
-  @close="closeModal"
+  top="2vh"
+  class="dialog-responsive"
+  @close="dialogClose"
 >
 
   <component
     :is="dynamicComponent"
+    :properties="properties"
     @set-dynamic-title="setDynamicTitle"
+    @dialog-close="visible = false"
   />
 
 </el-dialog>
 </template>
 
 <script>
+import WrapperDynamicSetup from '@/components/base/setup/WrapperDynamicSetup'
+
 export default {
-  props: {
-    component: {
-      type: Object,
-      default: () => ({
-        type: { type: String, required: true },
-        path: { type: String, required: true }
-      })
-    }
-  },
+  extends: WrapperDynamicSetup, // parent logic
 
   data: () => ({
-    visible: false,
-    title: ''
+    properties: {}
   }),
 
-  computed: {
-    dynamicComponent () {
-      return this.component.type === 'page'
-        ? () => import('@/pages/' + this.component.path)
-        : () => import('@/components/' + this.component.path)
-    }
-  },
-
-  mounted () {
-    this.visible = true
-  },
-
   methods: {
-    closeModal () {
-      this.visible = false
-      this.$emit('close-modal')
-    },
-
-    /**
-     * setting from child dynamic component
-     */
-    setDynamicTitle (titleFromDynamicChild) {
-      this.title = titleFromDynamicChild
+    dialogClose () {
+      this.$emit('dialog-close')
     }
   }
 }
