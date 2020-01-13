@@ -10,7 +10,7 @@
         <el-button
           type="primary"
           icon="el-icon-plus"
-          @click="dialogFormVisible = true"
+          @click="$_dialogDynamicMixin_dialogOpen('addProject')"
         >CREAR PROYECTO</el-button>
         <el-input
           class="pl-3"
@@ -47,24 +47,36 @@
       </el-card>
     </el-col>
   </el-row>
-  <dialognew :visiblemodal="dialogFormVisible" />
+
+  <dialog-dynamic
+    ref="dialogDynamic"
+    :component="dialogDynamic[dialogDynamicMixin_componentSelected]"
+    @dialog-close="$_dialogDynamicMixin_dialogClose"
+  />
 </div>
 </template>
 
 <script>
-import dialognew from '~/components/admin/project/dialog_new.vue'
-import projectcard from '~/components/admin/project/card.vue'
+import dialogDynamicMixin from "@/mixins/dialogDynamic.mixin"
+import projectcard from '~/components/projects/card.vue'
 import { mapState } from 'vuex'
 
 export default {
   layout: 'admin',
   components: {
-    dialognew,
     projectcard
   },
+  mixins: [dialogDynamicMixin],
+
   data () {
     return {
-      dialogFormVisible: false
+      dialogFormVisible: false,
+      dialogDynamic: {
+        addProject: {
+          type: 'component',
+          path: 'projects/AddProject'
+        }
+      }
     }
   },
   computed: {

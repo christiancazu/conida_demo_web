@@ -25,6 +25,7 @@
           size="mini"
           icon="el-icon-edit"
           circle
+          @click="$_dialogDynamicMixin_dialogOpen('editProject')"
         />
       </el-tooltip>
       <el-tooltip
@@ -51,17 +52,50 @@
           size="mini"
           icon="el-icon-delete"
           circle
+          @click="openConfirmDelete(data)"
         />
       </el-tooltip>
     </div>
   </el-card>
+  <dialog-dynamic
+    ref="dialogDynamic"
+    :component="dialogDynamic[dialogDynamicMixin_componentSelected]"
+    @dialog-close="$_dialogDynamicMixin_dialogClose"
+  />
 </div>
 </template>
 
 <script>
+import dialogDynamicMixin from "@/mixins/dialogDynamic.mixin"
+
 export default {
+
+  mixins: [dialogDynamicMixin],
   // eslint-disable-next-line vue/require-prop-types
-  props: ['data']
+  props: ['data'],
+  data () {
+    return {
+      dialogDynamic: {
+        editProject: {
+          type: 'component',
+          path: 'projects/EditProject'
+        }
+      }
+    }
+  },
+  methods: {
+    openConfirmDelete () {
+      this.$confirm('¿ Esta seguro de eliminar el proyecto ?', 'Eliminar proyecto', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancelar',
+        type: 'error'
+      }).then(() => {
+        // deleted
+      }).catch(() => {
+        //error al eliminar
+      })
+    }
+  },
 }
 </script>
 

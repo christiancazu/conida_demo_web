@@ -16,6 +16,7 @@ export default {
      * @param {Object} componentName
      */
     $_dialogDynamicMixin_dialogOpen (componentName) {
+      console.log(componentName)
       this.dialogDynamicMixin_componentSelected = componentName
       this.$refs.dialogDynamic.setDialogVisible()
     },
