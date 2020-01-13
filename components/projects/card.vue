@@ -67,6 +67,8 @@
 
 <script>
 import dialogDynamicMixin from "@/mixins/dialogDynamic.mixin"
+import { $_notify_success } from "@/use/notifications"
+import { SUCCESS } from '@/config/messages'
 
 export default {
 
@@ -84,16 +86,23 @@ export default {
     }
   },
   methods: {
-    openConfirmDelete () {
+    openConfirmDelete (item) {
       this.$confirm('¿ Esta seguro de eliminar el proyecto ?', 'Eliminar proyecto', {
         confirmButtonText: 'OK',
         cancelButtonText: 'Cancelar',
         type: 'error'
       }).then(() => {
-        // deleted
-      }).catch(() => {
-        //error al eliminar
-      })
+        const { id } = item
+        this.deletedProjects(id)
+        // eslint-disable-next-line no-unused-vars
+      }).catch(err => { })
+    },
+    async deletedProjects (id) {
+      try {
+        await this.$store.dispatch('projects/deleteItemContext', id)
+        $_notify_success(SUCCESS.DELETED)
+        this.$store.dispatch('projects/getDataContext')
+      } catch (error) { }
     }
   },
 }

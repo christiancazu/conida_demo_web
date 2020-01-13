@@ -1,11 +1,9 @@
 <template>
 <div>
-  <el-form
-    :model="form"
-    label-position="top"
-  >
+  <base-form @apply-after-submit-form="applyAfterSubmitForm">
     <el-form-item
       label="Nombre del proyecto"
+      prop="name"
     >
       <el-input
         v-model="form.name"
@@ -14,52 +12,46 @@
     </el-form-item>
     <el-form-item
       label="Descripción"
+      prop="description"
     >
       <el-input
         v-model="form.description"
         type="textarea"
       />
     </el-form-item>
-    <div class="text-right">
-      <el-button
-        :loading="$store.state.spinners.processingForm"
-        type="primary"
-        native-type="submit"
-      >
-        Guardar
-      </el-button>
-    </div>
-  </el-form>
+  </base-form>
 </div>
 </template>
 <script>
+import BaseForm from "@/components/base/BaseForm"
 import mountableAsDynamicMixin from "@/mixins/mountableAsDynamic.mixin"
+import { required } from "@/config/form.rules"
 
 export default {
+  components: {
+    BaseForm
+  },
   mixins: [mountableAsDynamicMixin],
   data () {
     return {
       dynamicTitle: 'Crear proyecto',
-      form: {},
-      imageUrl: ''
+      form: {
+        name: '',
+        description: ''
+      },
+      rules: {
+        name: required('el', 'nombre'),
+        description: required('la', 'descripción')
+      },
+      submit: {
+        storeName: 'projects',
+        storeAction: 'create',
+      }
     }
   },
   methods: {
-    // eslint-disable-next-line no-unused-vars
-    handleAvatarSuccess (res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
-    },
-    beforeAvatarUpload (file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('La imagen debe estar en formato JPG!')
-      }
-      if (!isLt2M) {
-        this.$message.error('La imagen excede los 2MB!')
-      }
-      return isJPG && isLt2M
+    applyAfterSubmitForm () {
+      this.$store.dispatch('projects/getDataContext')
     }
   },
 
