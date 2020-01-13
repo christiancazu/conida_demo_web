@@ -3,8 +3,8 @@
   <el-row>
     <el-col
       :sm="12"
-      :md="18"
-      :lg="18"
+      :md="7"
+      :lg="7"
     >
       <div class="pa-2 header-projects">
         <el-button
@@ -64,37 +64,7 @@ export default {
   },
   data () {
     return {
-      dialogFormVisible: false,
-      projects: [
-        {
-          id: 1,
-          name: 'Arequipa',
-          description: 'Proyecto de Arequipa.',
-          image:
-            'https://upload.wikimedia.org/wikipedia/commons/2/20/Imagen_Satelital_de_Cucuta.jpg'
-        },
-        {
-          id: 2,
-          name: 'Proyecto de ejemplo',
-          description: 'Este es un proyecto de ejemplo para realizar pruebas.',
-          image:
-            'https://upload.wikimedia.org/wikipedia/commons/2/20/Imagen_Satelital_de_Cucuta.jpg'
-        },
-        {
-          id: 3,
-          name: 'Proyecto de ejemplo 2',
-          description: 'Este es un proyecto de ejemplo para realizar pruebas.',
-          image:
-            'https://upload.wikimedia.org/wikipedia/commons/2/20/Imagen_Satelital_de_Cucuta.jpg'
-        },
-        {
-          id: 4,
-          name: 'Proyecto de ejemplo 3',
-          description: 'Este es un proyecto de ejemplo para realizar pruebas.',
-          image:
-            'https://upload.wikimedia.org/wikipedia/commons/2/20/Imagen_Satelital_de_Cucuta.jpg'
-        }
-      ]
+      dialogFormVisible: false
     }
   },
   computed: {

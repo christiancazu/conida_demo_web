@@ -3,6 +3,7 @@
 // context
 export const ADD_ITEM_CONTEXT = 'ADD_ITEM_CONTEXT'
 export const SET_DATA_CONTEXT = 'SET_DATA_CONTEXT'
+export const SET_ITEM_CONTEXT = 'SET_ITEM_CONTEXT'
 
 // spinners
 export const ENABLE_SPINNER = 'ENABLE_SPINNER'

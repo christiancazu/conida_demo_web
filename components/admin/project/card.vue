@@ -4,10 +4,16 @@
     class="card mb-3" shadow="hover"
     :body-style="{ padding: '0px' }"
   >
-    <img :src="data.image">
+    <img :src="data.image || 'https://upload.wikimedia.org/wikipedia/commons/2/20/Imagen_Satelital_de_Cucuta.jpg'">
     <div class="content">
       <h1 class="mb-2">{{ data.name }}</h1>
       <span>{{ data.description }}</span>
+      <nuxt-link
+        class="btn btn-block btn-flat-primary bottom"
+        :to="{ path: `/projects/${data.id}` }"
+      >
+        <p>---></p>
+      </nuxt-link>
     </div>
   </el-card>
 </div>
@@ -25,7 +31,7 @@ export default {
   img
     width: 100%
   .content
-    min-height: 100px
+    min-height: 70px
     padding: 1em
     h1
       margin: 0
