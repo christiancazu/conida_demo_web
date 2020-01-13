@@ -3,7 +3,7 @@ export default $axios => resource => ({
 
   create: data => $axios.$post(`${resource}/`, data),
 
-  // update: data => $axios.$put(`${resource}/${data.get('id')}/`, data),
+  update: data => $axios.$put(`${resource}/${data.get('id')}/`, data),
 
   delete: id => $axios.$delete(`${resource}/${id}/`),
 

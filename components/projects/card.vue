@@ -25,10 +25,10 @@
           size="mini"
           icon="el-icon-edit"
           circle
-          @click="$_dialogDynamicMixin_dialogOpen('editProject')"
+          @click="dialogOpen(data)"
         />
       </el-tooltip>
-      <el-tooltip
+      <!-- <el-tooltip
         content="Compartir"
         class="item"
         effect="dark"
@@ -40,7 +40,7 @@
           icon="el-icon-share"
           circle
         />
-      </el-tooltip>
+      </el-tooltip> -->
       <el-tooltip
         content="Eliminar"
         class="item"
@@ -66,6 +66,7 @@
 </template>
 
 <script>
+import { SET_ITEM_CONTEXT } from "@/store/mutations.types"
 import dialogDynamicMixin from "@/mixins/dialogDynamic.mixin"
 import { $_notify_success } from "@/use/notifications"
 import { SUCCESS } from '@/config/messages'
@@ -103,8 +104,12 @@ export default {
         $_notify_success(SUCCESS.DELETED)
         this.$store.dispatch('projects/getDataContext')
       } catch (error) { }
+    },
+    dialogOpen (item) {
+      this.$store.commit(`projects/${SET_ITEM_CONTEXT}`, item)
+      this.$_dialogDynamicMixin_dialogOpen('editProject')
     }
-  },
+  }
 }
 </script>
 

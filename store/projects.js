@@ -3,14 +3,15 @@ import { setDataContext, setItemContext } from '@/use/store.mutations'
 import {
   getDataContext,
   create,
-  deleteItemContext
+  deleteItemContext,
+  update
 } from '@/use/store.actions'
 
 const API = '$projectAPI'
 
 export const state = () => ({
   dataContext: [],
-  setItemContext: null
+  itemContext: null,
 })
 
 export const actions = {
@@ -22,6 +23,8 @@ export const actions = {
   },
 
   create: create(API),
+
+  update: update(API),
 
   deleteItemContext: deleteItemContext(API)
 }

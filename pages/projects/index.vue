@@ -1,31 +1,36 @@
 <template>
 <div>
+  <!--
   <el-row>
     <el-col
-      :sm="12"
-      :md="7"
+      :sm="24"
+      :md="12"
       :lg="7"
     >
-      <div class="pa-2 header-projects">
-        <el-button
-          type="primary"
-          icon="el-icon-plus"
-          @click="$_dialogDynamicMixin_dialogOpen('addProject')"
-        >CREAR PROYECTO</el-button>
-        <el-input
-          class="pl-3"
-          placeholder="Buscar..."
-          suffix-icon="el-icon-search"
-        />
-      </div>
+
     </el-col>
-  </el-row>
-  <el-row class="pt-3">
+  </el-row> -->
+  <el-row :gutter="10">
     <el-col
       :sm="12"
       :md="18"
       :lg="18"
     >
+      <div class="pt-2 pl-2 header-projects">
+        <el-button
+          v-model="search"
+          type="primary"
+          icon="el-icon-plus"
+          class="mr-3 mb-3"
+          @click="$_dialogDynamicMixin_dialogOpen('addProject')"
+        >CREAR PROYECTO</el-button>
+        <el-input
+          placeholder="Buscar..."
+          class="pb-3"
+          suffix-icon="el-icon-search"
+          style="width:290px"
+        />
+      </div>
       <div class="projects">
         <div
           v-for="project in projects"
@@ -40,6 +45,7 @@
       :sm="12"
       :md="6"
       :lg="6"
+      class="pt-2"
     >
       <el-card class="app-card-info">
         <h1>¿Qué es un proyecto?</h1>
@@ -70,7 +76,7 @@ export default {
 
   data () {
     return {
-      dialogFormVisible: false,
+      search: '',
       dialogDynamic: {
         addProject: {
           type: 'component',

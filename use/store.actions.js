@@ -12,6 +12,10 @@ export const create = api => async function ({}, form) {
   await this[api].create(form)
 }
 
+export const update = api => async function ({}, data) {
+  await this[api].update(data)
+}
+
 export const deleteItemContext = api => async function ({}, id) {
   await this[api].delete(id)
 }
