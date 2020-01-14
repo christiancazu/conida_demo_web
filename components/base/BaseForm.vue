@@ -82,7 +82,7 @@ export default {
 
           $_notify_success(SUCCESS[notifyType])
 
-          if (storeAction === 'create') this.resetForm()
+          if (storeAction === 'create' || storeAction === 'update') this.resetForm()
 
           this.$emit('apply-after-submit-form')
 

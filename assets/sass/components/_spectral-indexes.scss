@@ -1,0 +1,68 @@
+.card-spectral-index {
+  margin-bottom: 0.5rem;
+  .content-spectral-index {
+    display: flex;
+    align-items: center;
+    .el-image img {
+      border-radius: 8% !important;
+    }
+    .detail {
+      padding-left: 0.8rem;
+      width: 100%;
+      .title {
+        font-weight: bold;
+      }
+    }
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    img {
+      object-fit: cover;
+      height: 100%;
+    }
+    &__btn {
+      padding: 2px !important;
+      span {
+        display: flex;
+        align-items: center;
+      }
+      i {
+        font-size: 1.3rem;
+      }
+    }
+  }
+  .is-visible {
+   visibility: hidden;
+  }
+  &:hover {
+    cursor: pointer;
+    .is-visible {
+      visibility: visible;
+      transition: .3s ease-in-out;
+    }
+  }
+}
+.scope-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  outline: red;
+  img {
+    border-radius: 8% !important;
+  }
+  .item-image {
+    margin: 0.25rem 0;
+  }
+  .item-content {
+    padding-left: 0.8rem;
+    width: calc(100% - 70px);
+
+    .title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

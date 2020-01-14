@@ -77,6 +77,13 @@ export default {
           type: 'component',
           path:'panels/control/servicesWMS'
         }
+      },
+      {
+        title: 'Indices Espectrales', icon: 'el-icon-menu',
+        component: {
+          type: 'component',
+          path:'spectralIndexes/SpectralIndexes'
+        }
       }
     ]
   }),

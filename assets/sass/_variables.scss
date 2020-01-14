@@ -1,18 +1,32 @@
+// font-family
+$font-header: 'Titillium Web', sans-serif;
+$font-base: 'Open Sans', sans-serif;
 /* theme color */
-$--color-primary: teal;
+$--color-primary: #00BCD4;
+$--color-secondary: #1B3059;
+// $--color-success: #E91E63;
 
 /* custom text color */
 $--color-app-text: #28A398;
 $--color-menu-nav-text: #f2f6fc;
 
+$--card-padding: 0.5rem 0.8rem;
+/* el-main component */
+$--main-padding: .9rem;
+
 $--navbar-height: 42px;
+
+/* heading font - color*/
+$shade-light: #72767b;
+$shade-normal: #465076;
+$shade-dark: #353C58;
 
 $--drawer-bg-color: whitesmoke;
 // the :export directive is the magic sauce for webpack
 
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
-  navbarBgColor: $--color-primary;
+  navbarBgColor: $--color-secondary;
   navbarTextColor: $--color-menu-nav-text;
   navbarHeight: $--navbar-height;
 
