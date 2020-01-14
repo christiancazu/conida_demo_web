@@ -9,22 +9,33 @@
   <slot />
 
   <div class="form-btn-actions">
-    <el-button
-      v-if="$parent.mountedAsDynamic"
-      size="small"
-      @click="$parent.$_mountableAsDynamic_closeDialog"
-    >
-      CERRAR
-    </el-button>
-    <el-button
-      type="success"
-      size="small"
-      native-type="submit"
-      :loading="$store.state.spinners.PROCESSING_FORM"
-      @click.prevent="submitForm"
-    >
-      GUARDAR
-    </el-button>
+    <!-- default actions -->
+    <template v-if="!customActions">
+      <el-button
+        v-if="$parent.mountedAsDynamic"
+        size="small"
+        @click="$parent.$_mountableAsDynamic_closeDialog"
+      >
+        CERRAR
+      </el-button>
+      <el-button
+        type="success"
+        size="small"
+        native-type="submit"
+        :loading="$store.state.spinners.PROCESSING_FORM"
+        @click.prevent="submitForm"
+      >
+        GUARDAR
+      </el-button>
+    </template>
+
+    <!-- custom actions -->
+    <slot
+      v-else
+      :submit-form="submitForm"
+      name="custom-actions"
+    />
+
   </div>
 </el-form>
 </template>
@@ -45,6 +56,12 @@ import {
 import { SPINNERS } from '@/store/mutations.types'
 
 export default {
+  props: {
+    customActions: {
+      type: Boolean, default: false
+    }
+  },
+
   methods: {
     async submitForm () {
       let isFormValid = false

@@ -15,5 +15,6 @@ export const ERRORS = {
 export const SUCCESS = {
   CREATED: 'Los datos se registraron con éxito',
   UPDATED: 'Los datos se actualizaron con éxito',
-  DELETED: 'Los datos se eliminaron con éxito'
+  DELETED: 'Los datos se eliminaron con éxito',
+  SEARCHED: 'La busqueda se realizó con éxito'
 }

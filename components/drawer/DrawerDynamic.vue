@@ -5,17 +5,18 @@
   :visible.sync="visible"
   append-to-body
   direction="ltr"
-  size="33%"
+  :size="drawerSize"
   :modal="false"
   custom-class="drawer-right"
 >
-
-  <keep-alive>
-    <component
-      :is="dynamicComponent"
-      @set-dynamic-title="setDynamicTitle"
-    />
-  </keep-alive>
+  <div class="ma-2">
+    <keep-alive>
+      <component
+        :is="dynamicComponent"
+        @set-dynamic-title="setDynamicTitle"
+      />
+    </keep-alive>
+  </div>
 
 </el-drawer>
 </template>
@@ -25,6 +26,10 @@ import WrapperDynamicSetup from '@/components/base/setup/WrapperDynamicSetup'
 
 export default {
   extends: WrapperDynamicSetup, // parent logic
+
+  props: {
+    drawerSize: { type: String, default: '33%' }
+  },
 
   mounted () {
     // prevent tabindex on title when drawer is visible

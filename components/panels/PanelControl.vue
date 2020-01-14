@@ -30,10 +30,24 @@ export default {
     // menu items
     items: [
       {
-        title: 'Vistas', icon: 'el-icon-menu',
+        title: 'Catálogo', icon: 'el-icon-menu',
         component: {
           type: 'component',
-          path:'panels/control/Views'
+          path:'panels/control/Catalogue'
+        }
+      },
+      {
+        title: 'Calculadora Raster', icon: 'el-icon-menu',
+        component: {
+          type: 'component',
+          path:'panels/control/RasterCalculator'
+        }
+      },
+      {
+        title: 'Índices', icon: 'el-icon-menu',
+        component: {
+          type: 'component',
+          path:'panels/control/indexs'
         }
       },
       {
@@ -44,17 +58,24 @@ export default {
         }
       },
       {
-        title: 'Solicitud', icon: 'el-icon-menu',
+        title: 'Líneas', icon: 'el-icon-menu',
         component: {
           type: 'component',
-          path:'panels/control/Request'
+          path:'panels/control/Lines'
         }
       },
       {
-        title: 'Test', icon: 'el-icon-menu',
+        title: 'Perfil de Elevación', icon: 'el-icon-menu',
         component: {
           type: 'component',
-          path:'panels/control/Test'
+          path:'panels/control/ElevationProfile'
+        }
+      },
+      {
+        title: 'Servicios WMS', icon: 'el-icon-menu',
+        component: {
+          type: 'component',
+          path:'panels/control/servicesWMS'
         }
       }
     ]
