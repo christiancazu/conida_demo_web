@@ -60,8 +60,7 @@
 export default {
   props: {
     polygons: {
-      type: Array,
-      default: () => ([])
+      type: Array, default: () => ([])
     }
   },
 

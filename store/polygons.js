@@ -5,7 +5,6 @@ import {
 } from '@/store/mutations.types'
 
 import {
-  getDataContext,
   create,
   deleteItemContext
 } from '@/use/store.actions'
@@ -17,7 +16,10 @@ export const state = () => ({
 })
 
 export const actions = {
-  getDataContext: getDataContext(API),
+  getDataContext: async function ({ commit }) {
+    const data = await this[API].getPolygons()
+    commit(SET_DATA_CONTEXT, data)
+  },
 
   create: create(API),
 

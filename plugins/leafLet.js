@@ -18,7 +18,9 @@ const L = Vue.observable({
   DRAW: null,
   map: null,
   tempLayers: null,
-  projectLayers: null
+  projectLayers: null,
+  WMSSatelitalLayers: null,
+  WMSProjectLayers: null
 })
 
 export default ({}, inject) => {

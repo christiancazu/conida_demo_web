@@ -1,5 +1,13 @@
-import { SET_DATA_CONTEXT, SET_ITEM_CONTEXT } from '@/store/mutations.types'
-import { setDataContext, setItemContext } from '@/use/store.mutations'
+import {
+  SET_DATA_CONTEXT,
+  SET_ITEM_CONTEXT
+} from '@/store/mutations.types'
+
+import {
+  setDataContext,
+  setItemContext
+} from '@/use/store.mutations'
+
 import {
   getDataContext,
   create,
@@ -11,7 +19,7 @@ const API = '$projectAPI'
 
 export const state = () => ({
   dataContext: [],
-  itemContext: null,
+  itemContext: null
 })
 
 export const actions = {
@@ -26,10 +34,15 @@ export const actions = {
 
   update: update(API),
 
-  deleteItemContext: deleteItemContext(API)
+  deleteItemContext: deleteItemContext(API),
+
+  addToProject: async function ({}, form) {
+    await this[API].addToProject(form)
+  }
 }
 
 export const mutations = {
   [SET_DATA_CONTEXT]: setDataContext,
+
   [SET_ITEM_CONTEXT]: setItemContext
 }

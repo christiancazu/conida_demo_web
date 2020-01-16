@@ -18,6 +18,16 @@
       <!-- projectLayers -->
       <l-layer-group @ready="onReadyProjectLayers" />
 
+      <!-- WMSSatelitalLayers -->
+      <l-w-m-s-satelital-images
+        @ready-wms-satelital-layers="onReadyWMSSatelitalLayers"
+      />
+
+      <!-- WMSProjectLayers -->
+      <l-w-m-s-project-images
+        @ready-wms-satelital-layers="onReadyWMSProjectLayers"
+      />
+
       <l-side-by-side />
 
     </l-map>
@@ -41,23 +51,30 @@ import {
 
 import LDraw from '@/components/leaflet/LDraw'
 import LSideBySide from '@/components/leaflet/LSideBySide'
+import LWMSSatelitalImages from '@/components/leaflet/LWMSSatelitalImages'
+import LWMSProjectImages from "@/components/leaflet/LWMSProjectImages"
 
 import dialogDynamicMixin from '@/mixins/dialogDynamic.mixin'
 import { SERVICES } from '@/services/services.types'
 
 export default {
+  middleware: 'resolverProjectId',
+
   components: {
     LMap,
     LTileLayer,
     LDraw,
     LSideBySide,
-    LLayerGroup
+    LLayerGroup,
+    LWMSSatelitalImages,
+    LWMSProjectImages
   },
 
   mixins: [dialogDynamicMixin],
 
   data () {
     return {
+      abc: false,
       // leaflet
       map: {
         latLng: [
@@ -79,8 +96,6 @@ export default {
   },
 
   mounted () {
-    const projectId = this.$route.params.id
-    this.$store.dispatch('projects/getItemContext', projectId)
     this.init()
   },
 
@@ -96,6 +111,7 @@ export default {
     onReadyLMap (mapObject) {
       this.$L.map = mapObject
     },
+
     /**
      * assigning layerGroup to projectLayers
      */
@@ -103,13 +119,34 @@ export default {
       this.$L.projectLayers = mapObject
     },
 
-    init () {
+    /**
+     * assigning featureGroup to wmssatelitalgroupLayer
+     */
+    onReadyWMSSatelitalLayers (mapObject) {
+      this.$L.WMSSatelitalLayers = mapObject
+    },
+
+    /**
+     * assigning featureGroup to wmssatelitalgroupLayer
+     */
+    onReadyWMSProjectLayers (mapObject) {
+      this.$L.WMSProjectLayers = mapObject
+    },
+
+    async init () {
       /**
        * resolving width map when resize
        */
       const $mapWrapper = document.querySelector('.map-wrapper')
 
       setTimeout(() => $mapWrapper.style.width = '100%', 1)
+
+      try {
+        const projectId = this.$route.params.id
+        await this.$store.dispatch('projects/getItemContext', projectId)
+      } catch (error) {
+
+      }
     },
 
     logout () {

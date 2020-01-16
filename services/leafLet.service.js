@@ -7,7 +7,8 @@ import { geoJson } from "leaflet"
 import {
   SET_ACTIVE_VISIBLE_POLYGONS_BUTTONS,
   SET_ACTIVE_VISIBLE_POLYGON_BUTTON,
-  SPINNERS
+  SPINNERS,
+  TOGGLE_VISIBLE_LAYER
 } from '@/store/mutations.types'
 
 export default {
@@ -99,4 +100,32 @@ export default {
     } catch (error) {
     }
   },
+
+  [SERVICES.LEAFLET.VIEW_LAYER]: function (...args) {
+    // eslint-disable-next-line no-unused-vars
+    const [layer, groupLayers, storeNamespace, stateContext, app] = [...args]
+
+    if (layer.visible) {
+      groupLayers.removeLayer(layer.leafLetLayer)
+    } else {
+      const layerTosetBounds = geoJson(JSON.parse(layer.geometry))
+
+      this[SERVICES.LEAFLET.SET_BOUNDS](layerTosetBounds, app)
+
+      app.$L.map.removeLayer(layerTosetBounds)
+    }
+    app.store.commit(`${storeNamespace}/${TOGGLE_VISIBLE_LAYER}`, {
+      layer,
+      stateContext
+    })
+  },
+
+  [SERVICES.LEAFLET.SET_BOUNDS]: function (...args) {
+    const[layer, app] = [...args]
+    app.$L.map.fitBounds(layer.getBounds(), {
+      paddingBottomRight: [
+        300, 0
+      ]
+    })
+  }
 }

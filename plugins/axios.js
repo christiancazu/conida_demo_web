@@ -2,7 +2,22 @@ import { $_notify_error } from "@/use/notifications"
 
 import { ERRORS } from '@/config/messages'
 
-export default async ({ $axios }) => {
+export default async ({ app, $axios, redirect }) => {
+  $axios.onRequest((config) => {
+    //  custom functionality to set project id
+    if (config.method !== 'get') {
+      try {
+        config.data.set('project_id', app.store.state.projects.itemContext.id)
+      } catch {
+      }
+    } else {
+      try {
+        config.url += `?project_id=${app.store.state.projects.itemContext.id}`
+      } catch {
+      }
+    }
+  })
+
   $axios.onError(error => {
     const code = parseInt(error.response && error.response.status)
 
@@ -15,8 +30,9 @@ export default async ({ $axios }) => {
       break
     case 401:
       errorMessage = ERRORS.UNAUTHORIZED
-      // store.commit('auth/SET', { key: 'user', value: null })
-      // redirect('/login')
+      app.store.commit('auth/SET', { key: 'user', value: null })
+      app.store.commit('auth/SET', { key: 'loggedIn', value: false })
+      redirect('/login')
       break
     case 404:
       errorMessage = ERRORS.ROUTE_NOT_FOUND

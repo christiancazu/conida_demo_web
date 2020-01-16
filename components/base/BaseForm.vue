@@ -3,6 +3,7 @@
   ref="form"
   :model="$parent.form"
   :rules="$parent.rules"
+  :disabled="$store.state.spinners.PROCESSING_FORM"
   label-position="top"
   label-width="120px"
 >
@@ -97,6 +98,10 @@ export default {
       const { storeName, storeAction } = this.$parent.submit
 
       await this.$store.dispatch(`${storeName}/${storeAction}`, formData)
+    },
+
+    clearValidate () {
+      this.$refs.form.clearValidate()
     },
 
     resetForm () {

@@ -63,7 +63,7 @@ export default {
       }
     },
     satelitalIndex: function (val) {
-      console.log(val)
+      console.log('satelitalIndex', val)
       // this.addSideBySide()
     }
   },

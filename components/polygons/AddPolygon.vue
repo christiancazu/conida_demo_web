@@ -41,7 +41,6 @@ export default {
     dynamicTitle: 'Registrar Polígono',
 
     form: {
-      project_id: 3,
       name: '',
       geometry: '',
       description: ''

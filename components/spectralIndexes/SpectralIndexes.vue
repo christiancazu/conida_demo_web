@@ -72,8 +72,9 @@ export default {
   },
 
   created () {
-    const params = { project: 3 }
-    this.$store.dispatch('satelitalImages/getDataContext', params)
+    const project = this.$store.state.projects.itemContext.id
+
+    this.$store.dispatch('satelitalImages/getDataContext', project)
   },
   methods: {
     querySearch (string, cb) {
