@@ -1,5 +1,12 @@
 <script>
 export default {
-  middleware: 'redirect'
+  middleware: 'redirect',
+
+  async mounted () {
+    console.warn(this.$axios)
+    // await Promise.all([
+
+    // ])
+  }
 }
 </script>
